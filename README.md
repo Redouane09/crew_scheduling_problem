@@ -265,15 +265,7 @@ The benchmark runner generates:
 If you use this code in your research, please cite:
 
 ```bibtex
-@article{saemi2021new,
-  title={A new mathematical model to cover crew pairing and rostering problems simultaneously},
-  author={Saemi, S. and Komijan, A. R. and Tavakkoli-Moghaddam, R. and Fallah, M.},
-  journal={Journal of Engineering Research},
-  volume={9},
-  number={2},
-  pages={218--233},
-  year={2021}
-}
+
 ```
 
 ## Contributing
