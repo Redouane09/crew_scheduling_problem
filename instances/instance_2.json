@@ -1,0 +1,1443 @@
+{
+  "parameters": {
+    "num_flights": 38,
+    "num_days": 2,
+    "num_crew": 15,
+    "num_cities": 3,
+    "min_sit_time": 30,
+    "min_rest_time": 660,
+    "max_daily_flying": 480,
+    "max_horizon_flying": 2400,
+    "uncovered_flight_cost": 2000,
+    "deadhead_cost": 800,
+    "hotel_cost": 100,
+    "crew_cost": 400,
+    "same_day_connections": 112,
+    "next_day_connections": 52
+  },
+  "flights": [
+    {
+      "source_leg_id": "LEG_02_25",
+      "flight_id": "F0000",
+      "origin": "BASE2",
+      "destination": "AIR12",
+      "day": 1,
+      "departure_time": "01:04",
+      "arrival_time": "03:46",
+      "duration": 162,
+      "dep_date": "2000-01-02",
+      "arr_date": "2000-01-02"
+    },
+    {
+      "source_leg_id": "LEG_01_12",
+      "flight_id": "F0001",
+      "origin": "BASE1",
+      "destination": "AIR9",
+      "day": 0,
+      "departure_time": "18:30",
+      "arrival_time": "21:36",
+      "duration": 186,
+      "dep_date": "2000-01-01",
+      "arr_date": "2000-01-01"
+    },
+    {
+      "source_leg_id": "LEG_02_18",
+      "flight_id": "F0002",
+      "origin": "BASE3",
+      "destination": "AIR9",
+      "day": 1,
+      "departure_time": "14:05",
+      "arrival_time": "15:55",
+      "duration": 110,
+      "dep_date": "2000-01-02",
+      "arr_date": "2000-01-02"
+    },
+    {
+      "source_leg_id": "LEG_01_33",
+      "flight_id": "F0003",
+      "origin": "AIR2",
+      "destination": "BASE2",
+      "day": 0,
+      "departure_time": "21:00",
+      "arrival_time": "21:51",
+      "duration": 51,
+      "dep_date": "2000-01-01",
+      "arr_date": "2000-01-01"
+    },
+    {
+      "source_leg_id": "LEG_01_26",
+      "flight_id": "F0004",
+      "origin": "BASE2",
+      "destination": "AIR2",
+      "day": 0,
+      "departure_time": "17:47",
+      "arrival_time": "18:34",
+      "duration": 47,
+      "dep_date": "2000-01-01",
+      "arr_date": "2000-01-01"
+    },
+    {
+      "source_leg_id": "LEG_01_20",
+      "flight_id": "F0005",
+      "origin": "AIR9",
+      "destination": "BASE3",
+      "day": 0,
+      "departure_time": "23:05",
+      "arrival_time": "00:58",
+      "duration": 113,
+      "dep_date": "2000-01-01",
+      "arr_date": "2000-01-02"
+    },
+    {
+      "source_leg_id": "LEG_01_11",
+      "flight_id": "F0006",
+      "origin": "BASE1",
+      "destination": "AIR9",
+      "day": 0,
+      "departure_time": "15:24",
+      "arrival_time": "18:32",
+      "duration": 188,
+      "dep_date": "2000-01-01",
+      "arr_date": "2000-01-01"
+    },
+    {
+      "source_leg_id": "LEG_01_16",
+      "flight_id": "F0007",
+      "origin": "AIR2",
+      "destination": "BASE1",
+      "day": 0,
+      "departure_time": "19:30",
+      "arrival_time": "20:54",
+      "duration": 84,
+      "dep_date": "2000-01-01",
+      "arr_date": "2000-01-01"
+    },
+    {
+      "source_leg_id": "LEG_02_22",
+      "flight_id": "F0008",
+      "origin": "AIR6",
+      "destination": "BASE2",
+      "day": 1,
+      "departure_time": "14:00",
+      "arrival_time": "16:41",
+      "duration": 161,
+      "dep_date": "2000-01-02",
+      "arr_date": "2000-01-02"
+    },
+    {
+      "source_leg_id": "LEG_02_31",
+      "flight_id": "F0009",
+      "origin": "BASE2",
+      "destination": "AIR3",
+      "day": 1,
+      "departure_time": "16:13",
+      "arrival_time": "16:59",
+      "duration": 46,
+      "dep_date": "2000-01-02",
+      "arr_date": "2000-01-02"
+    },
+    {
+      "source_leg_id": "LEG_01_6",
+      "flight_id": "F0010",
+      "origin": "BASE2",
+      "destination": "AIR6",
+      "day": 0,
+      "departure_time": "14:21",
+      "arrival_time": "16:54",
+      "duration": 153,
+      "dep_date": "2000-01-01",
+      "arr_date": "2000-01-01"
+    },
+    {
+      "source_leg_id": "LEG_01_5",
+      "flight_id": "F0011",
+      "origin": "BASE2",
+      "destination": "AIR4",
+      "day": 0,
+      "departure_time": "23:11",
+      "arrival_time": "00:22",
+      "duration": 71,
+      "dep_date": "2000-01-01",
+      "arr_date": "2000-01-02"
+    },
+    {
+      "source_leg_id": "LEG_01_30",
+      "flight_id": "F0012",
+      "origin": "BASE2",
+      "destination": "AIR12",
+      "day": 0,
+      "departure_time": "12:59",
+      "arrival_time": "15:46",
+      "duration": 167,
+      "dep_date": "2000-01-01",
+      "arr_date": "2000-01-01"
+    },
+    {
+      "source_leg_id": "LEG_02_35",
+      "flight_id": "F0013",
+      "origin": "AIR11",
+      "destination": "BASE2",
+      "day": 1,
+      "departure_time": "00:00",
+      "arrival_time": "01:55",
+      "duration": 115,
+      "dep_date": "2000-01-02",
+      "arr_date": "2000-01-02"
+    },
+    {
+      "source_leg_id": "LEG_01_28",
+      "flight_id": "F0014",
+      "origin": "AIR12",
+      "destination": "BASE2",
+      "day": 0,
+      "departure_time": "17:00",
+      "arrival_time": "19:52",
+      "duration": 172,
+      "dep_date": "2000-01-01",
+      "arr_date": "2000-01-01"
+    },
+    {
+      "source_leg_id": "LEG_02_21",
+      "flight_id": "F0015",
+      "origin": "BASE2",
+      "destination": "AIR5",
+      "day": 1,
+      "departure_time": "17:56",
+      "arrival_time": "19:10",
+      "duration": 74,
+      "dep_date": "2000-01-02",
+      "arr_date": "2000-01-02"
+    },
+    {
+      "source_leg_id": "LEG_02_11",
+      "flight_id": "F0016",
+      "origin": "BASE1",
+      "destination": "AIR9",
+      "day": 1,
+      "departure_time": "15:24",
+      "arrival_time": "18:32",
+      "duration": 188,
+      "dep_date": "2000-01-02",
+      "arr_date": "2000-01-02"
+    },
+    {
+      "source_leg_id": "LEG_01_19",
+      "flight_id": "F0017",
+      "origin": "AIR9",
+      "destination": "BASE3",
+      "day": 0,
+      "departure_time": "19:20",
+      "arrival_time": "21:18",
+      "duration": 118,
+      "dep_date": "2000-01-01",
+      "arr_date": "2000-01-01"
+    },
+    {
+      "source_leg_id": "LEG_01_2",
+      "flight_id": "F0018",
+      "origin": "AIR3",
+      "destination": "BASE2",
+      "day": 0,
+      "departure_time": "17:45",
+      "arrival_time": "18:27",
+      "duration": 42,
+      "dep_date": "2000-01-01",
+      "arr_date": "2000-01-01"
+    },
+    {
+      "source_leg_id": "LEG_02_1",
+      "flight_id": "F0019",
+      "origin": "BASE2",
+      "destination": "AIR2",
+      "day": 1,
+      "departure_time": "19:24",
+      "arrival_time": "20:15",
+      "duration": 51,
+      "dep_date": "2000-01-02",
+      "arr_date": "2000-01-02"
+    },
+    {
+      "source_leg_id": "LEG_02_6",
+      "flight_id": "F0020",
+      "origin": "BASE2",
+      "destination": "AIR6",
+      "day": 1,
+      "departure_time": "14:21",
+      "arrival_time": "16:54",
+      "duration": 153,
+      "dep_date": "2000-01-02",
+      "arr_date": "2000-01-02"
+    },
+    {
+      "source_leg_id": "LEG_01_8",
+      "flight_id": "F0021",
+      "origin": "AIR6",
+      "destination": "BASE2",
+      "day": 0,
+      "departure_time": "17:40",
+      "arrival_time": "20:23",
+      "duration": 163,
+      "dep_date": "2000-01-01",
+      "arr_date": "2000-01-01"
+    },
+    {
+      "source_leg_id": "LEG_02_23",
+      "flight_id": "F0022",
+      "origin": "BASE3",
+      "destination": "AIR6",
+      "day": 1,
+      "departure_time": "22:20",
+      "arrival_time": "00:21",
+      "duration": 121,
+      "dep_date": "2000-01-02",
+      "arr_date": "2000-01-03"
+    },
+    {
+      "source_leg_id": "LEG_02_24",
+      "flight_id": "F0023",
+      "origin": "AIR4",
+      "destination": "BASE2",
+      "day": 1,
+      "departure_time": "23:00",
+      "arrival_time": "00:09",
+      "duration": 69,
+      "dep_date": "2000-01-02",
+      "arr_date": "2000-01-03"
+    },
+    {
+      "source_leg_id": "LEG_02_7",
+      "flight_id": "F0024",
+      "origin": "AIR4",
+      "destination": "BASE2",
+      "day": 1,
+      "departure_time": "12:20",
+      "arrival_time": "13:26",
+      "duration": 66,
+      "dep_date": "2000-01-02",
+      "arr_date": "2000-01-02"
+    },
+    {
+      "source_leg_id": "LEG_01_21",
+      "flight_id": "F0025",
+      "origin": "BASE2",
+      "destination": "AIR5",
+      "day": 0,
+      "departure_time": "17:56",
+      "arrival_time": "19:10",
+      "duration": 74,
+      "dep_date": "2000-01-01",
+      "arr_date": "2000-01-01"
+    },
+    {
+      "source_leg_id": "LEG_01_29",
+      "flight_id": "F0026",
+      "origin": "BASE2",
+      "destination": "AIR4",
+      "day": 0,
+      "departure_time": "21:06",
+      "arrival_time": "22:06",
+      "duration": 60,
+      "dep_date": "2000-01-01",
+      "arr_date": "2000-01-01"
+    },
+    {
+      "source_leg_id": "LEG_01_15",
+      "flight_id": "F0027",
+      "origin": "AIR9",
+      "destination": "BASE2",
+      "day": 0,
+      "departure_time": "17:05",
+      "arrival_time": "19:44",
+      "duration": 159,
+      "dep_date": "2000-01-01",
+      "arr_date": "2000-01-01"
+    },
+    {
+      "source_leg_id": "LEG_01_4",
+      "flight_id": "F0028",
+      "origin": "AIR5",
+      "destination": "BASE2",
+      "day": 0,
+      "departure_time": "20:35",
+      "arrival_time": "21:49",
+      "duration": 74,
+      "dep_date": "2000-01-01",
+      "arr_date": "2000-01-01"
+    },
+    {
+      "source_leg_id": "LEG_02_17",
+      "flight_id": "F0029",
+      "origin": "BASE1",
+      "destination": "AIR10",
+      "day": 1,
+      "departure_time": "22:01",
+      "arrival_time": "00:47",
+      "duration": 166,
+      "dep_date": "2000-01-02",
+      "arr_date": "2000-01-03"
+    },
+    {
+      "source_leg_id": "LEG_01_17",
+      "flight_id": "F0030",
+      "origin": "BASE1",
+      "destination": "AIR10",
+      "day": 0,
+      "departure_time": "22:01",
+      "arrival_time": "00:47",
+      "duration": 166,
+      "dep_date": "2000-01-01",
+      "arr_date": "2000-01-02"
+    },
+    {
+      "source_leg_id": "LEG_02_12",
+      "flight_id": "F0031",
+      "origin": "BASE1",
+      "destination": "AIR9",
+      "day": 1,
+      "departure_time": "18:30",
+      "arrival_time": "21:36",
+      "duration": 186,
+      "dep_date": "2000-01-02",
+      "arr_date": "2000-01-02"
+    },
+    {
+      "source_leg_id": "LEG_02_29",
+      "flight_id": "F0032",
+      "origin": "BASE2",
+      "destination": "AIR4",
+      "day": 1,
+      "departure_time": "21:06",
+      "arrival_time": "22:06",
+      "duration": 60,
+      "dep_date": "2000-01-02",
+      "arr_date": "2000-01-02"
+    },
+    {
+      "source_leg_id": "LEG_02_4",
+      "flight_id": "F0033",
+      "origin": "AIR5",
+      "destination": "BASE2",
+      "day": 1,
+      "departure_time": "20:35",
+      "arrival_time": "21:49",
+      "duration": 74,
+      "dep_date": "2000-01-02",
+      "arr_date": "2000-01-02"
+    },
+    {
+      "source_leg_id": "LEG_02_32",
+      "flight_id": "F0034",
+      "origin": "AIR7",
+      "destination": "BASE2",
+      "day": 1,
+      "departure_time": "10:10",
+      "arrival_time": "12:11",
+      "duration": 121,
+      "dep_date": "2000-01-02",
+      "arr_date": "2000-01-02"
+    },
+    {
+      "source_leg_id": "LEG_02_13",
+      "flight_id": "F0035",
+      "origin": "AIR10",
+      "destination": "BASE1",
+      "day": 1,
+      "departure_time": "14:20",
+      "arrival_time": "16:49",
+      "duration": 149,
+      "dep_date": "2000-01-02",
+      "arr_date": "2000-01-02"
+    },
+    {
+      "source_leg_id": "LEG_01_3",
+      "flight_id": "F0036",
+      "origin": "BASE2",
+      "destination": "AIR2",
+      "day": 0,
+      "departure_time": "19:24",
+      "arrival_time": "20:15",
+      "duration": 51,
+      "dep_date": "2000-01-01",
+      "arr_date": "2000-01-01"
+    },
+    {
+      "source_leg_id": "LEG_02_15",
+      "flight_id": "F0037",
+      "origin": "AIR9",
+      "destination": "BASE2",
+      "day": 1,
+      "departure_time": "17:05",
+      "arrival_time": "19:44",
+      "duration": 159,
+      "dep_date": "2000-01-02",
+      "arr_date": "2000-01-02"
+    }
+  ],
+  "crew": [
+    {
+      "crew_id": "C001",
+      "home_base": "BASE1",
+      "working_days": [
+        0,
+        1
+      ],
+      "min_sit_time": 30,
+      "min_rest_time": 660,
+      "max_daily_flying": 480,
+      "max_horizon_flying": 2400
+    },
+    {
+      "crew_id": "C002",
+      "home_base": "BASE2",
+      "working_days": [
+        0,
+        1
+      ],
+      "min_sit_time": 30,
+      "min_rest_time": 660,
+      "max_daily_flying": 480,
+      "max_horizon_flying": 2400
+    },
+    {
+      "crew_id": "C003",
+      "home_base": "BASE3",
+      "working_days": [
+        0,
+        1
+      ],
+      "min_sit_time": 30,
+      "min_rest_time": 660,
+      "max_daily_flying": 480,
+      "max_horizon_flying": 2400
+    },
+    {
+      "crew_id": "C004",
+      "home_base": "BASE1",
+      "working_days": [
+        0,
+        1
+      ],
+      "min_sit_time": 30,
+      "min_rest_time": 660,
+      "max_daily_flying": 480,
+      "max_horizon_flying": 2400
+    },
+    {
+      "crew_id": "C005",
+      "home_base": "BASE2",
+      "working_days": [
+        0,
+        1
+      ],
+      "min_sit_time": 30,
+      "min_rest_time": 660,
+      "max_daily_flying": 480,
+      "max_horizon_flying": 2400
+    },
+    {
+      "crew_id": "C006",
+      "home_base": "BASE3",
+      "working_days": [
+        0,
+        1
+      ],
+      "min_sit_time": 30,
+      "min_rest_time": 660,
+      "max_daily_flying": 480,
+      "max_horizon_flying": 2400
+    },
+    {
+      "crew_id": "C007",
+      "home_base": "BASE1",
+      "working_days": [
+        0,
+        1
+      ],
+      "min_sit_time": 30,
+      "min_rest_time": 660,
+      "max_daily_flying": 480,
+      "max_horizon_flying": 2400
+    },
+    {
+      "crew_id": "C008",
+      "home_base": "BASE2",
+      "working_days": [
+        0,
+        1
+      ],
+      "min_sit_time": 30,
+      "min_rest_time": 660,
+      "max_daily_flying": 480,
+      "max_horizon_flying": 2400
+    },
+    {
+      "crew_id": "C009",
+      "home_base": "BASE3",
+      "working_days": [
+        0,
+        1
+      ],
+      "min_sit_time": 30,
+      "min_rest_time": 660,
+      "max_daily_flying": 480,
+      "max_horizon_flying": 2400
+    },
+    {
+      "crew_id": "C010",
+      "home_base": "BASE1",
+      "working_days": [
+        0,
+        1
+      ],
+      "min_sit_time": 30,
+      "min_rest_time": 660,
+      "max_daily_flying": 480,
+      "max_horizon_flying": 2400
+    },
+    {
+      "crew_id": "C011",
+      "home_base": "BASE2",
+      "working_days": [
+        0,
+        1
+      ],
+      "min_sit_time": 30,
+      "min_rest_time": 660,
+      "max_daily_flying": 480,
+      "max_horizon_flying": 2400
+    },
+    {
+      "crew_id": "C012",
+      "home_base": "BASE3",
+      "working_days": [
+        0,
+        1
+      ],
+      "min_sit_time": 30,
+      "min_rest_time": 660,
+      "max_daily_flying": 480,
+      "max_horizon_flying": 2400
+    },
+    {
+      "crew_id": "C013",
+      "home_base": "BASE1",
+      "working_days": [
+        0,
+        1
+      ],
+      "min_sit_time": 30,
+      "min_rest_time": 660,
+      "max_daily_flying": 480,
+      "max_horizon_flying": 2400
+    },
+    {
+      "crew_id": "C014",
+      "home_base": "BASE2",
+      "working_days": [
+        0,
+        1
+      ],
+      "min_sit_time": 30,
+      "min_rest_time": 660,
+      "max_daily_flying": 480,
+      "max_horizon_flying": 2400
+    },
+    {
+      "crew_id": "C015",
+      "home_base": "BASE3",
+      "working_days": [
+        0,
+        1
+      ],
+      "min_sit_time": 30,
+      "min_rest_time": 660,
+      "max_daily_flying": 480,
+      "max_horizon_flying": 2400
+    }
+  ],
+  "cities": [
+    "BASE1",
+    "BASE2",
+    "BASE3"
+  ],
+  "connections": {
+    "same_day": [
+      {
+        "from": "F0002",
+        "to": "F0037",
+        "time_diff": 70
+      },
+      {
+        "from": "F0008",
+        "to": "F0000",
+        "time_diff": 503
+      },
+      {
+        "from": "F0008",
+        "to": "F0009",
+        "time_diff": 1412
+      },
+      {
+        "from": "F0008",
+        "to": "F0015",
+        "time_diff": 75
+      },
+      {
+        "from": "F0008",
+        "to": "F0019",
+        "time_diff": 163
+      },
+      {
+        "from": "F0008",
+        "to": "F0020",
+        "time_diff": 1300
+      },
+      {
+        "from": "F0008",
+        "to": "F0032",
+        "time_diff": 265
+      },
+      {
+        "from": "F0013",
+        "to": "F0000",
+        "time_diff": 1389
+      },
+      {
+        "from": "F0013",
+        "to": "F0009",
+        "time_diff": 858
+      },
+      {
+        "from": "F0013",
+        "to": "F0015",
+        "time_diff": 961
+      },
+      {
+        "from": "F0013",
+        "to": "F0019",
+        "time_diff": 1049
+      },
+      {
+        "from": "F0013",
+        "to": "F0020",
+        "time_diff": 746
+      },
+      {
+        "from": "F0013",
+        "to": "F0032",
+        "time_diff": 1151
+      },
+      {
+        "from": "F0015",
+        "to": "F0033",
+        "time_diff": 85
+      },
+      {
+        "from": "F0016",
+        "to": "F0037",
+        "time_diff": 1353
+      },
+      {
+        "from": "F0020",
+        "to": "F0008",
+        "time_diff": 1266
+      },
+      {
+        "from": "F0022",
+        "to": "F0008",
+        "time_diff": 819
+      },
+      {
+        "from": "F0023",
+        "to": "F0000",
+        "time_diff": 55
+      },
+      {
+        "from": "F0023",
+        "to": "F0009",
+        "time_diff": 964
+      },
+      {
+        "from": "F0023",
+        "to": "F0015",
+        "time_diff": 1067
+      },
+      {
+        "from": "F0023",
+        "to": "F0019",
+        "time_diff": 1155
+      },
+      {
+        "from": "F0023",
+        "to": "F0020",
+        "time_diff": 852
+      },
+      {
+        "from": "F0023",
+        "to": "F0032",
+        "time_diff": 1257
+      },
+      {
+        "from": "F0024",
+        "to": "F0000",
+        "time_diff": 698
+      },
+      {
+        "from": "F0024",
+        "to": "F0009",
+        "time_diff": 167
+      },
+      {
+        "from": "F0024",
+        "to": "F0015",
+        "time_diff": 270
+      },
+      {
+        "from": "F0024",
+        "to": "F0019",
+        "time_diff": 358
+      },
+      {
+        "from": "F0024",
+        "to": "F0020",
+        "time_diff": 55
+      },
+      {
+        "from": "F0024",
+        "to": "F0032",
+        "time_diff": 460
+      },
+      {
+        "from": "F0029",
+        "to": "F0035",
+        "time_diff": 813
+      },
+      {
+        "from": "F0031",
+        "to": "F0037",
+        "time_diff": 1169
+      },
+      {
+        "from": "F0032",
+        "to": "F0023",
+        "time_diff": 54
+      },
+      {
+        "from": "F0032",
+        "to": "F0024",
+        "time_diff": 854
+      },
+      {
+        "from": "F0033",
+        "to": "F0000",
+        "time_diff": 195
+      },
+      {
+        "from": "F0033",
+        "to": "F0009",
+        "time_diff": 1104
+      },
+      {
+        "from": "F0033",
+        "to": "F0015",
+        "time_diff": 1207
+      },
+      {
+        "from": "F0033",
+        "to": "F0019",
+        "time_diff": 1295
+      },
+      {
+        "from": "F0033",
+        "to": "F0020",
+        "time_diff": 992
+      },
+      {
+        "from": "F0033",
+        "to": "F0032",
+        "time_diff": 1397
+      },
+      {
+        "from": "F0034",
+        "to": "F0000",
+        "time_diff": 773
+      },
+      {
+        "from": "F0034",
+        "to": "F0009",
+        "time_diff": 242
+      },
+      {
+        "from": "F0034",
+        "to": "F0015",
+        "time_diff": 345
+      },
+      {
+        "from": "F0034",
+        "to": "F0019",
+        "time_diff": 433
+      },
+      {
+        "from": "F0034",
+        "to": "F0020",
+        "time_diff": 130
+      },
+      {
+        "from": "F0034",
+        "to": "F0032",
+        "time_diff": 535
+      },
+      {
+        "from": "F0035",
+        "to": "F0016",
+        "time_diff": 1355
+      },
+      {
+        "from": "F0035",
+        "to": "F0029",
+        "time_diff": 312
+      },
+      {
+        "from": "F0035",
+        "to": "F0031",
+        "time_diff": 101
+      },
+      {
+        "from": "F0037",
+        "to": "F0000",
+        "time_diff": 320
+      },
+      {
+        "from": "F0037",
+        "to": "F0009",
+        "time_diff": 1229
+      },
+      {
+        "from": "F0037",
+        "to": "F0015",
+        "time_diff": 1332
+      },
+      {
+        "from": "F0037",
+        "to": "F0019",
+        "time_diff": 1420
+      },
+      {
+        "from": "F0037",
+        "to": "F0020",
+        "time_diff": 1117
+      },
+      {
+        "from": "F0037",
+        "to": "F0032",
+        "time_diff": 82
+      },
+      {
+        "from": "F0001",
+        "to": "F0005",
+        "time_diff": 89
+      },
+      {
+        "from": "F0001",
+        "to": "F0017",
+        "time_diff": 1304
+      },
+      {
+        "from": "F0001",
+        "to": "F0027",
+        "time_diff": 1169
+      },
+      {
+        "from": "F0003",
+        "to": "F0004",
+        "time_diff": 1196
+      },
+      {
+        "from": "F0003",
+        "to": "F0010",
+        "time_diff": 990
+      },
+      {
+        "from": "F0003",
+        "to": "F0011",
+        "time_diff": 80
+      },
+      {
+        "from": "F0003",
+        "to": "F0012",
+        "time_diff": 908
+      },
+      {
+        "from": "F0003",
+        "to": "F0025",
+        "time_diff": 1205
+      },
+      {
+        "from": "F0003",
+        "to": "F0026",
+        "time_diff": 1395
+      },
+      {
+        "from": "F0003",
+        "to": "F0036",
+        "time_diff": 1293
+      },
+      {
+        "from": "F0004",
+        "to": "F0003",
+        "time_diff": 146
+      },
+      {
+        "from": "F0004",
+        "to": "F0007",
+        "time_diff": 56
+      },
+      {
+        "from": "F0006",
+        "to": "F0005",
+        "time_diff": 273
+      },
+      {
+        "from": "F0006",
+        "to": "F0017",
+        "time_diff": 48
+      },
+      {
+        "from": "F0006",
+        "to": "F0027",
+        "time_diff": 1353
+      },
+      {
+        "from": "F0007",
+        "to": "F0001",
+        "time_diff": 1296
+      },
+      {
+        "from": "F0007",
+        "to": "F0006",
+        "time_diff": 1110
+      },
+      {
+        "from": "F0007",
+        "to": "F0030",
+        "time_diff": 67
+      },
+      {
+        "from": "F0010",
+        "to": "F0021",
+        "time_diff": 46
+      },
+      {
+        "from": "F0012",
+        "to": "F0014",
+        "time_diff": 74
+      },
+      {
+        "from": "F0014",
+        "to": "F0004",
+        "time_diff": 1315
+      },
+      {
+        "from": "F0014",
+        "to": "F0010",
+        "time_diff": 1109
+      },
+      {
+        "from": "F0014",
+        "to": "F0011",
+        "time_diff": 199
+      },
+      {
+        "from": "F0014",
+        "to": "F0012",
+        "time_diff": 1027
+      },
+      {
+        "from": "F0014",
+        "to": "F0025",
+        "time_diff": 1324
+      },
+      {
+        "from": "F0014",
+        "to": "F0026",
+        "time_diff": 74
+      },
+      {
+        "from": "F0014",
+        "to": "F0036",
+        "time_diff": 1412
+      },
+      {
+        "from": "F0018",
+        "to": "F0004",
+        "time_diff": 1400
+      },
+      {
+        "from": "F0018",
+        "to": "F0010",
+        "time_diff": 1194
+      },
+      {
+        "from": "F0018",
+        "to": "F0011",
+        "time_diff": 284
+      },
+      {
+        "from": "F0018",
+        "to": "F0012",
+        "time_diff": 1112
+      },
+      {
+        "from": "F0018",
+        "to": "F0025",
+        "time_diff": 1409
+      },
+      {
+        "from": "F0018",
+        "to": "F0026",
+        "time_diff": 159
+      },
+      {
+        "from": "F0018",
+        "to": "F0036",
+        "time_diff": 57
+      },
+      {
+        "from": "F0021",
+        "to": "F0004",
+        "time_diff": 1284
+      },
+      {
+        "from": "F0021",
+        "to": "F0010",
+        "time_diff": 1078
+      },
+      {
+        "from": "F0021",
+        "to": "F0011",
+        "time_diff": 168
+      },
+      {
+        "from": "F0021",
+        "to": "F0012",
+        "time_diff": 996
+      },
+      {
+        "from": "F0021",
+        "to": "F0025",
+        "time_diff": 1293
+      },
+      {
+        "from": "F0021",
+        "to": "F0026",
+        "time_diff": 43
+      },
+      {
+        "from": "F0021",
+        "to": "F0036",
+        "time_diff": 1381
+      },
+      {
+        "from": "F0025",
+        "to": "F0028",
+        "time_diff": 85
+      },
+      {
+        "from": "F0027",
+        "to": "F0004",
+        "time_diff": 1323
+      },
+      {
+        "from": "F0027",
+        "to": "F0010",
+        "time_diff": 1117
+      },
+      {
+        "from": "F0027",
+        "to": "F0011",
+        "time_diff": 207
+      },
+      {
+        "from": "F0027",
+        "to": "F0012",
+        "time_diff": 1035
+      },
+      {
+        "from": "F0027",
+        "to": "F0025",
+        "time_diff": 1332
+      },
+      {
+        "from": "F0027",
+        "to": "F0026",
+        "time_diff": 82
+      },
+      {
+        "from": "F0027",
+        "to": "F0036",
+        "time_diff": 1420
+      },
+      {
+        "from": "F0028",
+        "to": "F0004",
+        "time_diff": 1198
+      },
+      {
+        "from": "F0028",
+        "to": "F0010",
+        "time_diff": 992
+      },
+      {
+        "from": "F0028",
+        "to": "F0011",
+        "time_diff": 82
+      },
+      {
+        "from": "F0028",
+        "to": "F0012",
+        "time_diff": 910
+      },
+      {
+        "from": "F0028",
+        "to": "F0025",
+        "time_diff": 1207
+      },
+      {
+        "from": "F0028",
+        "to": "F0026",
+        "time_diff": 1397
+      },
+      {
+        "from": "F0028",
+        "to": "F0036",
+        "time_diff": 1295
+      },
+      {
+        "from": "F0036",
+        "to": "F0003",
+        "time_diff": 45
+      },
+      {
+        "from": "F0036",
+        "to": "F0007",
+        "time_diff": 1395
+      }
+    ],
+    "next_day": [
+      {
+        "from": "F0001",
+        "to": "F0037"
+      },
+      {
+        "from": "F0003",
+        "to": "F0000"
+      },
+      {
+        "from": "F0003",
+        "to": "F0009"
+      },
+      {
+        "from": "F0003",
+        "to": "F0015"
+      },
+      {
+        "from": "F0003",
+        "to": "F0019"
+      },
+      {
+        "from": "F0003",
+        "to": "F0020"
+      },
+      {
+        "from": "F0003",
+        "to": "F0032"
+      },
+      {
+        "from": "F0005",
+        "to": "F0002"
+      },
+      {
+        "from": "F0005",
+        "to": "F0022"
+      },
+      {
+        "from": "F0006",
+        "to": "F0037"
+      },
+      {
+        "from": "F0007",
+        "to": "F0016"
+      },
+      {
+        "from": "F0007",
+        "to": "F0029"
+      },
+      {
+        "from": "F0007",
+        "to": "F0031"
+      },
+      {
+        "from": "F0010",
+        "to": "F0008"
+      },
+      {
+        "from": "F0011",
+        "to": "F0023"
+      },
+      {
+        "from": "F0011",
+        "to": "F0024"
+      },
+      {
+        "from": "F0014",
+        "to": "F0000"
+      },
+      {
+        "from": "F0014",
+        "to": "F0009"
+      },
+      {
+        "from": "F0014",
+        "to": "F0015"
+      },
+      {
+        "from": "F0014",
+        "to": "F0019"
+      },
+      {
+        "from": "F0014",
+        "to": "F0020"
+      },
+      {
+        "from": "F0014",
+        "to": "F0032"
+      },
+      {
+        "from": "F0017",
+        "to": "F0002"
+      },
+      {
+        "from": "F0017",
+        "to": "F0022"
+      },
+      {
+        "from": "F0018",
+        "to": "F0000"
+      },
+      {
+        "from": "F0018",
+        "to": "F0009"
+      },
+      {
+        "from": "F0018",
+        "to": "F0015"
+      },
+      {
+        "from": "F0018",
+        "to": "F0019"
+      },
+      {
+        "from": "F0018",
+        "to": "F0020"
+      },
+      {
+        "from": "F0018",
+        "to": "F0032"
+      },
+      {
+        "from": "F0021",
+        "to": "F0000"
+      },
+      {
+        "from": "F0021",
+        "to": "F0009"
+      },
+      {
+        "from": "F0021",
+        "to": "F0015"
+      },
+      {
+        "from": "F0021",
+        "to": "F0019"
+      },
+      {
+        "from": "F0021",
+        "to": "F0020"
+      },
+      {
+        "from": "F0021",
+        "to": "F0032"
+      },
+      {
+        "from": "F0025",
+        "to": "F0033"
+      },
+      {
+        "from": "F0026",
+        "to": "F0023"
+      },
+      {
+        "from": "F0026",
+        "to": "F0024"
+      },
+      {
+        "from": "F0027",
+        "to": "F0000"
+      },
+      {
+        "from": "F0027",
+        "to": "F0009"
+      },
+      {
+        "from": "F0027",
+        "to": "F0015"
+      },
+      {
+        "from": "F0027",
+        "to": "F0019"
+      },
+      {
+        "from": "F0027",
+        "to": "F0020"
+      },
+      {
+        "from": "F0027",
+        "to": "F0032"
+      },
+      {
+        "from": "F0028",
+        "to": "F0000"
+      },
+      {
+        "from": "F0028",
+        "to": "F0009"
+      },
+      {
+        "from": "F0028",
+        "to": "F0015"
+      },
+      {
+        "from": "F0028",
+        "to": "F0019"
+      },
+      {
+        "from": "F0028",
+        "to": "F0020"
+      },
+      {
+        "from": "F0028",
+        "to": "F0032"
+      },
+      {
+        "from": "F0030",
+        "to": "F0035"
+      }
+    ]
+  },
+  "cost_parameters": {
+    "uncovered_flight": 2000,
+    "deadhead": 800,
+    "hotel": 100,
+    "crew_per_duty": 400
+  }
+}
