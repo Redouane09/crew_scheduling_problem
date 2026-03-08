@@ -3,855 +3,315 @@
     "num_flights": 26,
     "num_days": 3,
     "num_crew": 15,
-    "num_cities": 3,
     "min_sit_time": 30,
     "min_rest_time": 660,
-    "max_daily_flying": 480,
-    "max_horizon_flying": 2400,
-    "uncovered_flight_cost": 2000,
-    "deadhead_cost": 800,
-    "hotel_cost": 100,
-    "crew_cost": 400,
-    "same_day_connections": 31,
-    "next_day_connections": 39
+    "max_flights_horizon": 20,
+    "max_flying_time_duty": 480
   },
   "flights": [
     {
-      "source_leg_id": "LEG_01_18",
-      "flight_id": "F0000",
-      "origin": "BASE3",
-      "destination": "AIR9",
+      "flight_id": 0,
+      "origin": "KIH",
+      "destination": "THR",
       "day": 0,
-      "departure_time": "14:05",
-      "arrival_time": "15:55",
-      "duration": 110,
-      "dep_date": "2000-01-01",
-      "arr_date": "2000-01-01"
+      "departure_time": "06:00",
+      "arrival_time": "07:47",
+      "duration": 107
     },
     {
-      "source_leg_id": "LEG_02_3",
-      "flight_id": "F0001",
-      "origin": "BASE2",
-      "destination": "AIR13",
-      "day": 1,
-      "departure_time": "10:41",
-      "arrival_time": "12:22",
-      "duration": 101,
-      "dep_date": "2000-01-02",
-      "arr_date": "2000-01-02"
-    },
-    {
-      "source_leg_id": "LEG_02_0",
-      "flight_id": "F0002",
-      "origin": "AIR3",
-      "destination": "BASE2",
-      "day": 1,
-      "departure_time": "17:45",
-      "arrival_time": "18:27",
-      "duration": 42,
-      "dep_date": "2000-01-02",
-      "arr_date": "2000-01-02"
-    },
-    {
-      "source_leg_id": "LEG_01_9",
-      "flight_id": "F0003",
-      "origin": "BASE2",
-      "destination": "AIR7",
+      "flight_id": 1,
+      "origin": "THR",
+      "destination": "ABZ",
       "day": 0,
-      "departure_time": "21:19",
-      "arrival_time": "23:04",
-      "duration": 105,
-      "dep_date": "2000-01-01",
-      "arr_date": "2000-01-01"
+      "departure_time": "08:17",
+      "arrival_time": "09:32",
+      "duration": 75
     },
     {
-      "source_leg_id": "LEG_02_15",
-      "flight_id": "F0004",
-      "origin": "AIR9",
-      "destination": "BASE2",
+      "flight_id": 2,
+      "origin": "ABZ",
+      "destination": "MHD",
       "day": 1,
-      "departure_time": "17:05",
-      "arrival_time": "19:44",
-      "duration": 159,
-      "dep_date": "2000-01-02",
-      "arr_date": "2000-01-02"
+      "departure_time": "11:00",
+      "arrival_time": "12:47",
+      "duration": 107
     },
     {
-      "source_leg_id": "LEG_01_2",
-      "flight_id": "F0005",
-      "origin": "AIR3",
-      "destination": "BASE2",
-      "day": 0,
-      "departure_time": "17:45",
-      "arrival_time": "18:27",
-      "duration": 42,
-      "dep_date": "2000-01-01",
-      "arr_date": "2000-01-01"
-    },
-    {
-      "source_leg_id": "LEG_03_12",
-      "flight_id": "F0006",
-      "origin": "BASE1",
-      "destination": "AIR9",
-      "day": 2,
-      "departure_time": "18:30",
-      "arrival_time": "21:36",
-      "duration": 186,
-      "dep_date": "2000-01-03",
-      "arr_date": "2000-01-03"
-    },
-    {
-      "source_leg_id": "LEG_03_6",
-      "flight_id": "F0007",
-      "origin": "BASE2",
-      "destination": "AIR6",
-      "day": 2,
-      "departure_time": "14:21",
-      "arrival_time": "16:54",
-      "duration": 153,
-      "dep_date": "2000-01-03",
-      "arr_date": "2000-01-03"
-    },
-    {
-      "source_leg_id": "LEG_02_1",
-      "flight_id": "F0008",
-      "origin": "BASE2",
-      "destination": "AIR2",
+      "flight_id": 3,
+      "origin": "MHD",
+      "destination": "THR",
       "day": 1,
-      "departure_time": "19:24",
-      "arrival_time": "20:15",
-      "duration": 51,
-      "dep_date": "2000-01-02",
-      "arr_date": "2000-01-02"
+      "departure_time": "13:17",
+      "arrival_time": "15:00",
+      "duration": 103
     },
     {
-      "source_leg_id": "LEG_03_29",
-      "flight_id": "F0009",
-      "origin": "BASE2",
-      "destination": "AIR4",
+      "flight_id": 4,
+      "origin": "THR",
+      "destination": "KIH",
       "day": 2,
-      "departure_time": "21:06",
-      "arrival_time": "22:06",
-      "duration": 60,
-      "dep_date": "2000-01-03",
-      "arr_date": "2000-01-03"
+      "departure_time": "11:00",
+      "arrival_time": "12:05",
+      "duration": 65
     },
     {
-      "source_leg_id": "LEG_03_33",
-      "flight_id": "F0010",
-      "origin": "BASE2",
-      "destination": "AIR8",
+      "flight_id": 5,
+      "origin": "KIH",
+      "destination": "IFN",
       "day": 2,
-      "departure_time": "23:26",
-      "arrival_time": "02:33",
-      "duration": 187,
-      "dep_date": "2000-01-03",
-      "arr_date": "2000-01-04"
+      "departure_time": "12:35",
+      "arrival_time": "14:02",
+      "duration": 87
     },
     {
-      "source_leg_id": "LEG_01_0",
-      "flight_id": "F0011",
-      "origin": "BASE1",
-      "destination": "AIR1",
+      "flight_id": 6,
+      "origin": "IFN",
+      "destination": "THR",
+      "day": 2,
+      "departure_time": "14:32",
+      "arrival_time": "15:33",
+      "duration": 61
+    },
+    {
+      "flight_id": 7,
+      "origin": "THR",
+      "destination": "MHD",
+      "day": 2,
+      "departure_time": "16:03",
+      "arrival_time": "17:16",
+      "duration": 73
+    },
+    {
+      "flight_id": 8,
+      "origin": "MHD",
+      "destination": "KIH",
       "day": 0,
-      "departure_time": "12:00",
-      "arrival_time": "13:13",
-      "duration": 73,
-      "dep_date": "2000-01-01",
-      "arr_date": "2000-01-01"
+      "departure_time": "06:00",
+      "arrival_time": "07:01",
+      "duration": 61
     },
     {
-      "source_leg_id": "LEG_01_11",
-      "flight_id": "F0012",
-      "origin": "BASE1",
-      "destination": "AIR9",
+      "flight_id": 9,
+      "origin": "KIH",
+      "destination": "IFN",
       "day": 0,
-      "departure_time": "15:24",
-      "arrival_time": "18:32",
-      "duration": 188,
-      "dep_date": "2000-01-01",
-      "arr_date": "2000-01-01"
+      "departure_time": "07:31",
+      "arrival_time": "08:43",
+      "duration": 72
     },
     {
-      "source_leg_id": "LEG_03_18",
-      "flight_id": "F0013",
-      "origin": "BASE3",
-      "destination": "AIR9",
-      "day": 2,
-      "departure_time": "14:05",
-      "arrival_time": "15:55",
-      "duration": 110,
-      "dep_date": "2000-01-03",
-      "arr_date": "2000-01-03"
-    },
-    {
-      "source_leg_id": "LEG_01_8",
-      "flight_id": "F0014",
-      "origin": "AIR6",
-      "destination": "BASE2",
+      "flight_id": 10,
+      "origin": "IFN",
+      "destination": "KIH",
       "day": 0,
-      "departure_time": "17:40",
-      "arrival_time": "20:23",
-      "duration": 163,
-      "dep_date": "2000-01-01",
-      "arr_date": "2000-01-01"
+      "departure_time": "09:13",
+      "arrival_time": "10:39",
+      "duration": 86
     },
     {
-      "source_leg_id": "LEG_03_27",
-      "flight_id": "F0015",
-      "origin": "AIR12",
-      "destination": "BASE2",
-      "day": 2,
-      "departure_time": "13:45",
-      "arrival_time": "16:34",
-      "duration": 169,
-      "dep_date": "2000-01-03",
-      "arr_date": "2000-01-03"
-    },
-    {
-      "source_leg_id": "LEG_03_32",
-      "flight_id": "F0016",
-      "origin": "AIR7",
-      "destination": "BASE2",
-      "day": 2,
-      "departure_time": "10:10",
-      "arrival_time": "12:11",
-      "duration": 121,
-      "dep_date": "2000-01-03",
-      "arr_date": "2000-01-03"
-    },
-    {
-      "source_leg_id": "LEG_01_4",
-      "flight_id": "F0017",
-      "origin": "AIR5",
-      "destination": "BASE2",
+      "flight_id": 11,
+      "origin": "KIH",
+      "destination": "MHD",
       "day": 0,
-      "departure_time": "20:35",
-      "arrival_time": "21:49",
-      "duration": 74,
-      "dep_date": "2000-01-01",
-      "arr_date": "2000-01-01"
+      "departure_time": "11:09",
+      "arrival_time": "12:37",
+      "duration": 88
     },
     {
-      "source_leg_id": "LEG_02_14",
-      "flight_id": "F0018",
-      "origin": "BASE2",
-      "destination": "AIR11",
+      "flight_id": 12,
+      "origin": "MHD",
+      "destination": "ABZ",
       "day": 1,
-      "departure_time": "21:16",
-      "arrival_time": "23:06",
-      "duration": 110,
-      "dep_date": "2000-01-02",
-      "arr_date": "2000-01-02"
+      "departure_time": "11:00",
+      "arrival_time": "12:51",
+      "duration": 111
     },
     {
-      "source_leg_id": "LEG_03_23",
-      "flight_id": "F0019",
-      "origin": "BASE3",
-      "destination": "AIR6",
+      "flight_id": 13,
+      "origin": "ABZ",
+      "destination": "THR",
+      "day": 1,
+      "departure_time": "13:21",
+      "arrival_time": "15:09",
+      "duration": 108
+    },
+    {
+      "flight_id": 14,
+      "origin": "THR",
+      "destination": "SYZ",
+      "day": 1,
+      "departure_time": "15:39",
+      "arrival_time": "17:23",
+      "duration": 104
+    },
+    {
+      "flight_id": 15,
+      "origin": "SYZ",
+      "destination": "IFN",
+      "day": 1,
+      "departure_time": "17:53",
+      "arrival_time": "19:14",
+      "duration": 81
+    },
+    {
+      "flight_id": 16,
+      "origin": "IFN",
+      "destination": "MHD",
       "day": 2,
-      "departure_time": "22:20",
-      "arrival_time": "00:21",
-      "duration": 121,
-      "dep_date": "2000-01-03",
-      "arr_date": "2000-01-04"
+      "departure_time": "11:00",
+      "arrival_time": "12:13",
+      "duration": 73
     },
     {
-      "source_leg_id": "LEG_03_1",
-      "flight_id": "F0020",
-      "origin": "BASE2",
-      "destination": "AIR2",
+      "flight_id": 17,
+      "origin": "MHD",
+      "destination": "ABZ",
       "day": 2,
-      "departure_time": "19:24",
-      "arrival_time": "20:15",
-      "duration": 51,
-      "dep_date": "2000-01-03",
-      "arr_date": "2000-01-03"
+      "departure_time": "12:43",
+      "arrival_time": "13:49",
+      "duration": 66
     },
     {
-      "source_leg_id": "LEG_02_2",
-      "flight_id": "F0021",
-      "origin": "AIR13",
-      "destination": "BASE2",
-      "day": 1,
-      "departure_time": "13:20",
-      "arrival_time": "15:18",
-      "duration": 118,
-      "dep_date": "2000-01-02",
-      "arr_date": "2000-01-02"
+      "flight_id": 18,
+      "origin": "ABZ",
+      "destination": "THR",
+      "day": 2,
+      "departure_time": "14:19",
+      "arrival_time": "15:43",
+      "duration": 84
     },
     {
-      "source_leg_id": "LEG_02_7",
-      "flight_id": "F0022",
-      "origin": "AIR4",
-      "destination": "BASE2",
-      "day": 1,
-      "departure_time": "12:20",
-      "arrival_time": "13:26",
-      "duration": 66,
-      "dep_date": "2000-01-02",
-      "arr_date": "2000-01-02"
-    },
-    {
-      "source_leg_id": "LEG_02_34",
-      "flight_id": "F0023",
-      "origin": "AIR2",
-      "destination": "BASE2",
-      "day": 1,
-      "departure_time": "21:00",
-      "arrival_time": "21:51",
-      "duration": 51,
-      "dep_date": "2000-01-02",
-      "arr_date": "2000-01-02"
-    },
-    {
-      "source_leg_id": "LEG_01_33",
-      "flight_id": "F0024",
-      "origin": "AIR2",
-      "destination": "BASE2",
+      "flight_id": 19,
+      "origin": "THR",
+      "destination": "ABZ",
       "day": 0,
-      "departure_time": "21:00",
-      "arrival_time": "21:51",
-      "duration": 51,
-      "dep_date": "2000-01-01",
-      "arr_date": "2000-01-01"
+      "departure_time": "06:00",
+      "arrival_time": "07:38",
+      "duration": 98
     },
     {
-      "source_leg_id": "LEG_03_5",
-      "flight_id": "F0025",
-      "origin": "BASE2",
-      "destination": "AIR4",
+      "flight_id": 20,
+      "origin": "ABZ",
+      "destination": "SYZ",
+      "day": 0,
+      "departure_time": "08:08",
+      "arrival_time": "09:59",
+      "duration": 111
+    },
+    {
+      "flight_id": 21,
+      "origin": "SYZ",
+      "destination": "THR",
+      "day": 0,
+      "departure_time": "10:29",
+      "arrival_time": "12:15",
+      "duration": 106
+    },
+    {
+      "flight_id": 22,
+      "origin": "THR",
+      "destination": "KIH",
+      "day": 1,
+      "departure_time": "11:00",
+      "arrival_time": "12:07",
+      "duration": 67
+    },
+    {
+      "flight_id": 23,
+      "origin": "KIH",
+      "destination": "ABZ",
+      "day": 1,
+      "departure_time": "12:37",
+      "arrival_time": "13:42",
+      "duration": 65
+    },
+    {
+      "flight_id": 24,
+      "origin": "ABZ",
+      "destination": "KIH",
+      "day": 1,
+      "departure_time": "14:12",
+      "arrival_time": "15:30",
+      "duration": 78
+    },
+    {
+      "flight_id": 25,
+      "origin": "KIH",
+      "destination": "IFN",
       "day": 2,
-      "departure_time": "23:11",
-      "arrival_time": "00:22",
-      "duration": 71,
-      "dep_date": "2000-01-03",
-      "arr_date": "2000-01-04"
+      "departure_time": "11:00",
+      "arrival_time": "12:56",
+      "duration": 116
     }
   ],
   "crew": [
     {
-      "crew_id": "C001",
-      "home_base": "BASE1",
-      "working_days": [
-        0,
-        1,
-        2
-      ],
-      "min_sit_time": 30,
-      "min_rest_time": 660,
-      "max_daily_flying": 480,
-      "max_horizon_flying": 2400
+      "crew_id": 0,
+      "home_base": "KIH"
     },
     {
-      "crew_id": "C002",
-      "home_base": "BASE2",
-      "working_days": [
-        0,
-        1,
-        2
-      ],
-      "min_sit_time": 30,
-      "min_rest_time": 660,
-      "max_daily_flying": 480,
-      "max_horizon_flying": 2400
+      "crew_id": 1,
+      "home_base": "ABZ"
     },
     {
-      "crew_id": "C003",
-      "home_base": "BASE3",
-      "working_days": [
-        0,
-        1,
-        2
-      ],
-      "min_sit_time": 30,
-      "min_rest_time": 660,
-      "max_daily_flying": 480,
-      "max_horizon_flying": 2400
+      "crew_id": 2,
+      "home_base": "THR"
     },
     {
-      "crew_id": "C004",
-      "home_base": "BASE1",
-      "working_days": [
-        0,
-        1,
-        2
-      ],
-      "min_sit_time": 30,
-      "min_rest_time": 660,
-      "max_daily_flying": 480,
-      "max_horizon_flying": 2400
+      "crew_id": 3,
+      "home_base": "IFN"
     },
     {
-      "crew_id": "C005",
-      "home_base": "BASE2",
-      "working_days": [
-        0,
-        1,
-        2
-      ],
-      "min_sit_time": 30,
-      "min_rest_time": 660,
-      "max_daily_flying": 480,
-      "max_horizon_flying": 2400
+      "crew_id": 4,
+      "home_base": "MHD"
     },
     {
-      "crew_id": "C006",
-      "home_base": "BASE3",
-      "working_days": [
-        0,
-        1,
-        2
-      ],
-      "min_sit_time": 30,
-      "min_rest_time": 660,
-      "max_daily_flying": 480,
-      "max_horizon_flying": 2400
+      "crew_id": 5,
+      "home_base": "IFN"
     },
     {
-      "crew_id": "C007",
-      "home_base": "BASE1",
-      "working_days": [
-        0,
-        1,
-        2
-      ],
-      "min_sit_time": 30,
-      "min_rest_time": 660,
-      "max_daily_flying": 480,
-      "max_horizon_flying": 2400
+      "crew_id": 6,
+      "home_base": "MHD"
     },
     {
-      "crew_id": "C008",
-      "home_base": "BASE2",
-      "working_days": [
-        0,
-        1,
-        2
-      ],
-      "min_sit_time": 30,
-      "min_rest_time": 660,
-      "max_daily_flying": 480,
-      "max_horizon_flying": 2400
+      "crew_id": 7,
+      "home_base": "THR"
     },
     {
-      "crew_id": "C009",
-      "home_base": "BASE3",
-      "working_days": [
-        0,
-        1,
-        2
-      ],
-      "min_sit_time": 30,
-      "min_rest_time": 660,
-      "max_daily_flying": 480,
-      "max_horizon_flying": 2400
+      "crew_id": 8,
+      "home_base": "IFN"
     },
     {
-      "crew_id": "C010",
-      "home_base": "BASE1",
-      "working_days": [
-        0,
-        1,
-        2
-      ],
-      "min_sit_time": 30,
-      "min_rest_time": 660,
-      "max_daily_flying": 480,
-      "max_horizon_flying": 2400
+      "crew_id": 9,
+      "home_base": "ABZ"
     },
     {
-      "crew_id": "C011",
-      "home_base": "BASE2",
-      "working_days": [
-        0,
-        1,
-        2
-      ],
-      "min_sit_time": 30,
-      "min_rest_time": 660,
-      "max_daily_flying": 480,
-      "max_horizon_flying": 2400
+      "crew_id": 10,
+      "home_base": "ABZ"
     },
     {
-      "crew_id": "C012",
-      "home_base": "BASE3",
-      "working_days": [
-        0,
-        1,
-        2
-      ],
-      "min_sit_time": 30,
-      "min_rest_time": 660,
-      "max_daily_flying": 480,
-      "max_horizon_flying": 2400
+      "crew_id": 11,
+      "home_base": "THR"
     },
     {
-      "crew_id": "C013",
-      "home_base": "BASE1",
-      "working_days": [
-        0,
-        1,
-        2
-      ],
-      "min_sit_time": 30,
-      "min_rest_time": 660,
-      "max_daily_flying": 480,
-      "max_horizon_flying": 2400
+      "crew_id": 12,
+      "home_base": "ABZ"
     },
     {
-      "crew_id": "C014",
-      "home_base": "BASE2",
-      "working_days": [
-        0,
-        1,
-        2
-      ],
-      "min_sit_time": 30,
-      "min_rest_time": 660,
-      "max_daily_flying": 480,
-      "max_horizon_flying": 2400
+      "crew_id": 13,
+      "home_base": "THR"
     },
     {
-      "crew_id": "C015",
-      "home_base": "BASE3",
-      "working_days": [
-        0,
-        1,
-        2
-      ],
-      "min_sit_time": 30,
-      "min_rest_time": 660,
-      "max_daily_flying": 480,
-      "max_horizon_flying": 2400
+      "crew_id": 14,
+      "home_base": "THR"
     }
   ],
   "cities": [
-    "BASE1",
-    "BASE2",
-    "BASE3"
-  ],
-  "connections": {
-    "same_day": [
-      {
-        "from": "F0005",
-        "to": "F0003",
-        "time_diff": 172
-      },
-      {
-        "from": "F0014",
-        "to": "F0003",
-        "time_diff": 56
-      },
-      {
-        "from": "F0017",
-        "to": "F0003",
-        "time_diff": 1410
-      },
-      {
-        "from": "F0024",
-        "to": "F0003",
-        "time_diff": 1408
-      },
-      {
-        "from": "F0001",
-        "to": "F0021",
-        "time_diff": 58
-      },
-      {
-        "from": "F0002",
-        "to": "F0001",
-        "time_diff": 974
-      },
-      {
-        "from": "F0002",
-        "to": "F0008",
-        "time_diff": 57
-      },
-      {
-        "from": "F0002",
-        "to": "F0018",
-        "time_diff": 169
-      },
-      {
-        "from": "F0004",
-        "to": "F0001",
-        "time_diff": 897
-      },
-      {
-        "from": "F0004",
-        "to": "F0008",
-        "time_diff": 1420
-      },
-      {
-        "from": "F0004",
-        "to": "F0018",
-        "time_diff": 92
-      },
-      {
-        "from": "F0008",
-        "to": "F0023",
-        "time_diff": 45
-      },
-      {
-        "from": "F0021",
-        "to": "F0001",
-        "time_diff": 1163
-      },
-      {
-        "from": "F0021",
-        "to": "F0008",
-        "time_diff": 246
-      },
-      {
-        "from": "F0021",
-        "to": "F0018",
-        "time_diff": 358
-      },
-      {
-        "from": "F0022",
-        "to": "F0001",
-        "time_diff": 1275
-      },
-      {
-        "from": "F0022",
-        "to": "F0008",
-        "time_diff": 358
-      },
-      {
-        "from": "F0022",
-        "to": "F0018",
-        "time_diff": 470
-      },
-      {
-        "from": "F0023",
-        "to": "F0001",
-        "time_diff": 770
-      },
-      {
-        "from": "F0023",
-        "to": "F0008",
-        "time_diff": 1293
-      },
-      {
-        "from": "F0023",
-        "to": "F0018",
-        "time_diff": 1405
-      },
-      {
-        "from": "F0015",
-        "to": "F0007",
-        "time_diff": 1307
-      },
-      {
-        "from": "F0015",
-        "to": "F0009",
-        "time_diff": 272
-      },
-      {
-        "from": "F0015",
-        "to": "F0010",
-        "time_diff": 412
-      },
-      {
-        "from": "F0015",
-        "to": "F0020",
-        "time_diff": 170
-      },
-      {
-        "from": "F0015",
-        "to": "F0025",
-        "time_diff": 397
-      },
-      {
-        "from": "F0016",
-        "to": "F0007",
-        "time_diff": 130
-      },
-      {
-        "from": "F0016",
-        "to": "F0009",
-        "time_diff": 535
-      },
-      {
-        "from": "F0016",
-        "to": "F0010",
-        "time_diff": 675
-      },
-      {
-        "from": "F0016",
-        "to": "F0020",
-        "time_diff": 433
-      },
-      {
-        "from": "F0016",
-        "to": "F0025",
-        "time_diff": 660
-      }
-    ],
-    "next_day": [
-      {
-        "from": "F0000",
-        "to": "F0004"
-      },
-      {
-        "from": "F0005",
-        "to": "F0001"
-      },
-      {
-        "from": "F0005",
-        "to": "F0008"
-      },
-      {
-        "from": "F0005",
-        "to": "F0018"
-      },
-      {
-        "from": "F0012",
-        "to": "F0004"
-      },
-      {
-        "from": "F0014",
-        "to": "F0001"
-      },
-      {
-        "from": "F0014",
-        "to": "F0008"
-      },
-      {
-        "from": "F0014",
-        "to": "F0018"
-      },
-      {
-        "from": "F0017",
-        "to": "F0001"
-      },
-      {
-        "from": "F0017",
-        "to": "F0008"
-      },
-      {
-        "from": "F0017",
-        "to": "F0018"
-      },
-      {
-        "from": "F0024",
-        "to": "F0001"
-      },
-      {
-        "from": "F0024",
-        "to": "F0008"
-      },
-      {
-        "from": "F0024",
-        "to": "F0018"
-      },
-      {
-        "from": "F0002",
-        "to": "F0007"
-      },
-      {
-        "from": "F0002",
-        "to": "F0009"
-      },
-      {
-        "from": "F0002",
-        "to": "F0010"
-      },
-      {
-        "from": "F0002",
-        "to": "F0020"
-      },
-      {
-        "from": "F0002",
-        "to": "F0025"
-      },
-      {
-        "from": "F0004",
-        "to": "F0007"
-      },
-      {
-        "from": "F0004",
-        "to": "F0009"
-      },
-      {
-        "from": "F0004",
-        "to": "F0010"
-      },
-      {
-        "from": "F0004",
-        "to": "F0020"
-      },
-      {
-        "from": "F0004",
-        "to": "F0025"
-      },
-      {
-        "from": "F0021",
-        "to": "F0007"
-      },
-      {
-        "from": "F0021",
-        "to": "F0009"
-      },
-      {
-        "from": "F0021",
-        "to": "F0010"
-      },
-      {
-        "from": "F0021",
-        "to": "F0020"
-      },
-      {
-        "from": "F0021",
-        "to": "F0025"
-      },
-      {
-        "from": "F0022",
-        "to": "F0007"
-      },
-      {
-        "from": "F0022",
-        "to": "F0009"
-      },
-      {
-        "from": "F0022",
-        "to": "F0010"
-      },
-      {
-        "from": "F0022",
-        "to": "F0020"
-      },
-      {
-        "from": "F0022",
-        "to": "F0025"
-      },
-      {
-        "from": "F0023",
-        "to": "F0007"
-      },
-      {
-        "from": "F0023",
-        "to": "F0009"
-      },
-      {
-        "from": "F0023",
-        "to": "F0010"
-      },
-      {
-        "from": "F0023",
-        "to": "F0020"
-      },
-      {
-        "from": "F0023",
-        "to": "F0025"
-      }
-    ]
-  },
-  "cost_parameters": {
-    "uncovered_flight": 2000,
-    "deadhead": 800,
-    "hotel": 100,
-    "crew_per_duty": 400
-  }
+    "THR",
+    "MHD",
+    "SYZ",
+    "ABZ",
+    "IFN",
+    "KIH"
+  ]
 }
