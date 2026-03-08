@@ -42,6 +42,17 @@ class GurobiSolver(BaseSolver):
                 print("✗ No solution returned by the solver.")
                 return None
 
+            # Check if the solver reported an error or infeasibility
+            feasibility = solution.get("feasibility", "Unknown")
+            if feasibility in ("Error", "Infeasible", "Unbounded"):
+                print(f"✗ Solver finished with status: {feasibility}")
+                if "error_message" in solution:
+                    print(f"  Error: {solution['error_message']}")
+                diagnostics_dir = os.path.join(os.getcwd(), "diagnostics")
+                os.makedirs(diagnostics_dir, exist_ok=True)
+                model._write_diagnostics(solution, diagnostics_dir, instance_data)
+                return None
+
             self.solve_time = time.time() - start_time
             self.objective_value = solution.get('objective_value')
 

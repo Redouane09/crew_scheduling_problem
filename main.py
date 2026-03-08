@@ -125,11 +125,18 @@ def solve_instance(args):
         print("\n" + "="*70)
         print(f"SOLUTION SUMMARY ({args.solver.upper()})")
         print("="*70)
-        obj_val = solution.get('objective_value', solution.get('objective', 0.0)) or 0.0
-        try:
-            print(f"Objective Value: ${float(obj_val):,.2f}")
-        except Exception:
-            print(f"Objective Value: {obj_val}")
+        feasibility = solution.get('feasibility', 'Unknown')
+        print(f"Solver Status: {feasibility}")
+        if feasibility not in ("Optimal", "Feasible", "TimeLimit"):
+            print(f"⚠ WARNING: Solution status is '{feasibility}' — results may not be reliable!")
+        obj_val = solution.get('objective_value', solution.get('objective'))
+        if obj_val is not None:
+            try:
+                print(f"Objective Value: ${float(obj_val):,.2f}")
+            except Exception:
+                print(f"Objective Value: {obj_val}")
+        else:
+            print("Objective Value: N/A")
         print(f"Solve Time: {solve_time:.2f} seconds")
         total_flights = instance.get('parameters', {}).get('num_flights', num_flights)
         print(f"Flights Covered: {total_flights - len(solution.get('uncovered_flights', []))} / {total_flights}")

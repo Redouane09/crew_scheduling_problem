@@ -703,7 +703,22 @@ class IntegratedCrewSchedulingModel:
             return self._extract_solution(results, solve_time)
         except Exception as e:
             print(f"✗ Solver error: {e}")
-            return {"feasibility": "Error", "error_message": str(e), "solve_time": time.time() - start}
+            return {
+                "feasibility": "Error",
+                "error_message": str(e),
+                "solve_time": time.time() - start,
+                "uncovered_flights": list(self.fid_list),
+                "instance_info": {
+                    "num_flights": len(self.fid_list),
+                    "num_crews": len(self.I),
+                    "num_days": len(self.D),
+                    "num_cities": len(self.J),
+                    "same_day_pairs": len(self.same_day_pairs),
+                    "next_day_pairs": len(self.next_day_pairs),
+                },
+                "var_counts": dict(self.var_stats),
+                "constraint_counts": dict(self.con_stats),
+            }
 
     def _var_index_tuple(self, var):
         """Helper: return index tuple for a VarData, robustly."""
@@ -773,6 +788,10 @@ class IntegratedCrewSchedulingModel:
             sol["feasibility"] = "TimeLimit"
         else:
             sol["feasibility"] = f"Status {status}, {term_cond}"
+
+        # For infeasible/unbounded solutions, mark all flights as uncovered
+        if sol["feasibility"] in ("Infeasible", "Unbounded", "Error", "Unknown"):
+            sol["uncovered_flights"] = list(self.fid_list)
 
         # If solution exists (not infeasible/unbounded), extract variable values
         if sol["feasibility"] not in ("Infeasible", "Unbounded", "Error", "Unknown"):
