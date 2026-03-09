@@ -6,7 +6,8 @@
     "min_sit_time": 30,
     "min_rest_time": 660,
     "max_flights_horizon": 960,
-    "max_flying_time_duty": 480
+    "max_flying_time_duty": 480,
+    "max_elapsed_time_duty": 840
   },
   "flights": [
     {

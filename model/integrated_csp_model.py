@@ -644,17 +644,12 @@ class IntegratedCrewSchedulingModel:
                     fly_terms = sum((self.flights_by_id[fid]["l"] - self.flights_by_id[fid]["de"]) * model.x[i, fid, n]
                                     for fid in flights_on_day.get(d, []) for n in model.N)
                     sit_terms = 0
-                    for (fid1, fid2) in self.same_day_pairs + self.next_day_pairs:
+                    for (fid1, fid2) in self.same_day_pairs:
                         f1 = self.flights_by_id[fid1]
                         f2 = self.flights_by_id[fid2]
                         if f1["day"] != d:
                             continue
-                        if f2["day"] == f1["day"]:
-                            sit_gap = f2["de"] - f1["l"]
-                        elif f2["day"] == f1["day"] + 1:
-                            sit_gap = 1440 + f2["de"] - f1["l"]
-                        else:
-                            continue
+                        sit_gap = f2["de"] - f1["l"]
                         sit_terms += sum(sit_gap * model.Z[i, (fid1, fid2), n] for n in model.N_minus_1)
                     model.add_component(f"c35_{i}_{d}", pyo.Constraint(expr=fly_terms + sit_terms <= upper3))
                     self.con_stats["35"] = self.con_stats.get("35", 0) + 1
