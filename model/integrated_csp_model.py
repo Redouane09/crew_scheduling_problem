@@ -202,7 +202,7 @@ class IntegratedCrewSchedulingModel:
         MAX_DUTIES_CAP = int(self.params.get("max_duties_cap", 50))
 
         try:
-            safe_default_rounds = max(1, max(len(self.flights_by_day.get(d, [])) for d in self.D))
+            safe_default_rounds = max(1, sum(len(self.flights_by_day.get(d, [])) for d in self.D))
         except Exception:
             safe_default_rounds = 10
 
@@ -344,10 +344,10 @@ class IntegratedCrewSchedulingModel:
         self.model.c2 = pyo.Constraint(self.model.I, self.model.Flights, rule=c2_rule)
         self.con_stats["2"] = len(self.model.c2)
 
-        # (3) At most one flight per crew per round per day
-        def c3_rule(model, i, n, d):
-            return sum(model.x[i, fid, n] for fid in flights_on_day.get(d, [])) <= 1
-        self.model.c3 = pyo.Constraint(self.model.I, self.model.N, self.model.D, rule=c3_rule)
+        # (3) At most one flight per crew per round (global across all days)
+        def c3_rule(model, i, n):
+            return sum(model.x[i, fid, n] for fid in model.Flights) <= 1
+        self.model.c3 = pyo.Constraint(self.model.I, self.model.N, rule=c3_rule)
         self.con_stats["3"] = len(self.model.c3)
 
         # (4) Same‑day sit time – BuildAction over pairs
