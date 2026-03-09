@@ -5,7 +5,7 @@
     "num_crew": 50,
     "min_sit_time": 30,
     "min_rest_time": 660,
-    "max_flights_horizon": 20,
+    "max_flights_horizon": 2400,
     "max_flying_time_duty": 480
   },
   "flights": [
