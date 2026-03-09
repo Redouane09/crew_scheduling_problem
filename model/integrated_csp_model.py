@@ -13,6 +13,11 @@ Key fixes:
  - Improved robustness in variable index parsing and defensive handling of None
    variable values while extracting solutions.
  - Removed duplicate / misplaced code fragments.
+ - Constraint (7): `later_sum` now uses lexicographic ordering (dp > d) OR
+   (dp == d AND fp > f) so that same-day higher-index duties and next-day
+   duties with any duty index are all treated as "later" duties.
+ - Constraint (35): overnight (next-day) sit times excluded from per-duty
+   elapsed time to avoid incorrectly blocking cross-day crew assignments.
 """
 
 import time
@@ -395,10 +400,12 @@ class IntegratedCrewSchedulingModel:
                 return pyo.Constraint.Skip
             if f > d:
                 return pyo.Constraint.Skip
-            # later_sum: sum of duties after (d,f) with index > f
+            # later_sum: sum of duties strictly after (d,f) in lexicographic order,
+            # i.e. (dp > d) OR (dp == d AND fp > f)
             later_sum = sum(model.y[i, dp, fp]
-                            for dp in model.D if dp > d
-                            for fp in model.F if fp > f)
+                            for dp in model.D
+                            for fp in model.F
+                            if (dp > d) or (dp == d and fp > f))
             return model.w[i, home, d] >= 1 - M * (1 - model.y[i, d, f]) - M * later_sum
         self.model.c7 = pyo.Constraint(self.model.I, self.model.D, self.model.F, rule=c7_rule)
         self.con_stats["7"] = len(self.model.c7)
