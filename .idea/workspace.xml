@@ -101,7 +101,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1773063311519</updated>
-      <workItem from="1773063315036" duration="4710000" />
+      <workItem from="1773063315036" duration="7055000" />
     </task>
     <task id="LOCAL-00001" summary="Merge pull request #1 from Redouane09/copilot/fix-gurobi-solver-error-reporting&#10;&#10;Fix solver failure silently reporting a successful solution">
       <option name="closed" value="true" />
@@ -135,7 +135,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773066717272</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Merge pull request #1 from Redouane09/copilot/fix-gurobi-solver-error-reporting&#10;&#10;Fix solver failure silently reporting a successful solution">
+      <option name="closed" value="true" />
+      <created>1773068505076</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1773068505076</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -147,7 +155,7 @@
     <option name="LAST_COMMIT_MESSAGE" value="Merge pull request #1 from Redouane09/copilot/fix-gurobi-solver-error-reporting&#10;&#10;Fix solver failure silently reporting a successful solution" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/airline_crew_scheduling_problem$gurobi_solve.coverage" NAME="gurobi_solve Coverage Results" MODIFIED="1773066588083" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/airline_crew_scheduling_problem$gurobi_solve.coverage" NAME="gurobi_solve Coverage Results" MODIFIED="1773068350092" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/airline_crew_scheduling_problem$main.coverage" NAME="main Coverage Results" MODIFIED="1773063637779" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="github-copilot-workspace">

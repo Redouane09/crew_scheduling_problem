@@ -73,7 +73,7 @@ class IntegratedCrewSchedulingModel:
         for i in self.I:
             if i < len(crew_data):
                 # cost may be present in per-crew dictionary, else default
-                self.r_i[i] = float(crew_data[i].get("cost", self.params.get("default_crew_cost", 500.0)))
+                self.r_i[i] = float(crew_data[i].get("cost", self.params.get("default_crew_cost", 200.0)))
                 # home base from instance; fallback to first city if missing
                 self.o_i[i] = crew_data[i].get("home_base", self.J[0] if self.J else None)
             else:

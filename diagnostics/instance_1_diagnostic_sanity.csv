@@ -2,4 +2,4 @@ check,detail,count
 coverage_mismatches,,0
 deadhead_mismatches,,0
 flow_violations,,0
-start_end_mismatches,,0
+start_end_mismatches,,4
