@@ -344,10 +344,10 @@ class IntegratedCrewSchedulingModel:
         self.model.c2 = pyo.Constraint(self.model.I, self.model.Flights, rule=c2_rule)
         self.con_stats["2"] = len(self.model.c2)
 
-        # (3) At most one flight per crew per round
-        def c3_rule(model, i, n):
-            return sum(model.x[i, fid, n] for fid in model.Flights) <= 1
-        self.model.c3 = pyo.Constraint(self.model.I, self.model.N, rule=c3_rule)
+        # (3) At most one flight per crew per round per day
+        def c3_rule(model, i, n, d):
+            return sum(model.x[i, fid, n] for fid in flights_on_day.get(d, [])) <= 1
+        self.model.c3 = pyo.Constraint(self.model.I, self.model.N, self.model.D, rule=c3_rule)
         self.con_stats["3"] = len(self.model.c3)
 
         # (4) Same‑day sit time – BuildAction over pairs
@@ -583,7 +583,7 @@ class IntegratedCrewSchedulingModel:
                             continue
                         lhs = sum(model.y[i, dp, f] for dp in model.D if dp < d)
                         expr1 = lhs <= 1 + M * (1 - model.y[i, d, f + 1])
-                        expr2 = 1 - M * (1 - model.y[i, d, f + 1]) <= lhs + M
+                        expr2 = 1 - M * (1 - model.y[i, d, f + 1]) <= lhs
                         model.add_component(f"c25_{i}_{d}_{f}", pyo.Constraint(expr=expr1))
                         model.add_component(f"c26_{i}_{d}_{f}", pyo.Constraint(expr=expr2))
                         self.con_stats["25"] = self.con_stats.get("25", 0) + 1
