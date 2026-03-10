@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 # solvers/highs_solver.py
 """
-HiGHS solver wrapper for the integrated crew scheduling model.
+HiGHS solver wrapper for the crew scheduling model.
 
-This wrapper checks availability (tries 'highs' CLI then 'highs_direct'),
-fails fast with a clear diagnostic if HiGHS is not available, builds the
-model and delegates to model.solve(..., solver_name=chosen_backend).
+Provides:
+- robust availability check (prefer CLI /usr/local/bin/highs, fallback to highspy)
+- attempts to set executable for Pyomo solver plugin when necessary
+- delegates to IntegratedCrewSchedulingModel.solve(...) (which streams solver output)
+- returns the model solution (and writes diagnostics prefixed by solver)
 """
 import sys
 import os
@@ -16,7 +18,6 @@ from collections import defaultdict
 
 from .base_solver import BaseSolver
 
-# Ensure repo root is on sys.path
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
@@ -26,7 +27,7 @@ from pyomo.opt import SolverFactory
 
 
 class HiGHSWrapperSolver(BaseSolver):
-    """HiGHS solver using the generic Pyomo model."""
+    """HiGHS solver wrapper using Pyomo backends."""
 
     def __init__(self):
         super().__init__("HiGHS_Exact")
@@ -35,53 +36,66 @@ class HiGHSWrapperSolver(BaseSolver):
         self.model = None
 
     def _check_highs_available(self):
-        """Return (available_bool, chosen_backend, diagnostic_message).
+        """
+        Return (available_bool, chosen_backend, diagnostic_message).
 
         Strategy:
-         - Prefer CLI if `shutil.which('highs')` returns a path.
-         - Otherwise, attempt to import the Python binding 'highspy' and use 'highs_direct' if present.
-         - Avoid blindly calling SolverFactory('highs_direct') when highspy is not installed (that can cause Pyomo to try mapping to an ASL solver).
+         - If a highs executable is on PATH (shutil.which('highs')), prefer the CLI.
+           Try to create SolverFactory('highs'); if not available try to set_executable(..., validate=False).
+         - Otherwise, attempt to import highspy; if present, use 'highs_direct'.
+         - Avoid calling SolverFactory('highs_direct') blindly when highspy isn't importable.
         """
         attempted = []
-        # Prefer CLI if present
         highs_bin = shutil.which('highs')
+
+        # prefer CLI if present
         if highs_bin:
-            # try a light-weight check using SolverFactory but do not rely on available(True) raising
+            attempted.append('highs(path_detected)')
             try:
                 s = SolverFactory('highs')
-                attempted.append('highs')
-                # Return CLI as chosen backend if creation succeeded
-                return True, 'highs', f"HiGHS CLI found at {highs_bin}"
+                # if plugin not available, try set_executable if method exists
+                try:
+                    if not s.available(False) and hasattr(s, "set_executable"):
+                        try:
+                            s.set_executable(highs_bin, validate=False)
+                        except Exception:
+                            pass
+                    if s.available(False):
+                        return True, 'highs', f"HiGHS CLI backend available at {highs_bin}"
+                except Exception:
+                    # if available(False) raised but object created, assume usable when CLI is present
+                    return True, 'highs', f"HiGHS CLI found at {highs_bin} (creation succeeded)"
             except Exception:
-                # If creation unexpectedly fails, continue to binding check
-                attempted.append('highs_creation_failed')
+                pass
 
-        # Try Python binding 'highspy' before calling SolverFactory('highs_direct')
+        # try python binding if installed
         try:
             import highspy  # type: ignore
-            # If import succeeded, attempt to use solver name highs_direct
+            attempted.append('highspy_installed')
             try:
                 s2 = SolverFactory('highs_direct')
-                attempted.append('highs_direct')
-                return True, 'highs_direct', "HiGHS Python binding (highspy) is importable; will use highs_direct."
+                try:
+                    if s2.available(False):
+                        return True, 'highs_direct', "HiGHS python binding available ('highs_direct')."
+                except Exception:
+                    return True, 'highs_direct', "HiGHS python binding importable; will attempt 'highs_direct'."
             except Exception:
                 attempted.append('highs_direct_creation_failed')
         except Exception:
             attempted.append('highspy_not_installed')
 
+        highs_bin = shutil.which('highs')
         msg_lines = [
             f"Attempted backends: {attempted}",
             f"shutil.which('highs') -> {highs_bin}",
-            "HiGHS is not available to Pyomo in this environment. Install the HiGHS CLI "
-            "(conda install -c conda-forge highs / brew install highs) or the Python binding 'highspy' "
-            "(pip install highspy) and ensure you are running the same Python environment."
+            "HiGHS is not available to Pyomo in this environment. Install HiGHS CLI (conda install -c conda-forge highs / brew install highs) "
+            "or the Python binding 'highspy' (pip install highspy) and ensure you run from the same Python environment."
         ]
         return False, None, "\n".join(msg_lines)
 
     def solve(self, instance_data, time_limit=300.0):
         start_time = time.time()
         try:
-            # Quick availability check: fail fast with clear diagnostics if HiGHS is not usable
             avail, backend, diag = self._check_highs_available()
             if not avail:
                 print("✗ HiGHS not available:", diag)
@@ -98,44 +112,47 @@ class HiGHSWrapperSolver(BaseSolver):
                     }
                 }
 
-            # Build the Pyomo model
             model = IntegratedCrewSchedulingModel(instance_data)
             self.model = model
 
-            # Solve with HiGHS (use the backend determined by availability check)
-            solver_name = 'highs' if backend == 'highs' else 'highs_direct'
-            solution = model.solve(time_limit=time_limit, solver_name=solver_name)
+            solver_backend = 'highs' if backend == 'highs' else 'highs_direct'
+            print(f"Using HiGHS backend: {solver_backend}")
+
+            solution = model.solve(time_limit=time_limit, solver_name=solver_backend)
             if solution is None:
-                print("✗ No solution returned by the solver.")
+                print("✗ No solution returned by model.solve()")
                 return None
 
-            # Check if the solver reported an error or infeasibility
             feasibility = solution.get("feasibility", "Unknown")
             if feasibility in ("Error", "Infeasible", "Unbounded"):
-                print(f"✗ Solver finished with status: {feasibility}")
+                print(f"✗ HiGHS finished with status: {feasibility}")
                 if "error_message" in solution:
-                    print(f"  Error: {solution['error_message']}")
+                    print("  Error:", solution["error_message"])
                 diagnostics_dir = os.path.join(os.getcwd(), "diagnostics")
                 os.makedirs(diagnostics_dir, exist_ok=True)
                 model._write_diagnostics(solution, diagnostics_dir, instance_data)
-                return None
+                return solution
 
             self.solve_time = time.time() - start_time
-            self.objective_value = solution.get('objective_value')
-
-            # Write diagnostics
+            self.objective_value = solution.get("objective_value")
             diagnostics_dir = os.path.join(os.getcwd(), "diagnostics")
             os.makedirs(diagnostics_dir, exist_ok=True)
             model._write_diagnostics(solution, diagnostics_dir, instance_data)
-
             return solution
 
         except Exception as e:
-            print(f"✗ Solver error: {e}")
+            print(f"✗ Exception in HiGHS wrapper: {e}")
             traceback.print_exc()
-            self.solve_time = time.time() - start_time
-            self.objective_value = None
-            return None
+            return {
+                "feasibility": "Error",
+                "error_message": str(e),
+                "solve_time": time.time() - start_time,
+                "uncovered_flights": instance_data.get("flights", []),
+                "instance_info": {
+                    "num_flights": len(instance_data.get("flights", [])),
+                    "num_crews": len(instance_data.get("crew", [])),
+                }
+            }
 
     def get_solver_stats(self):
         stats = {
