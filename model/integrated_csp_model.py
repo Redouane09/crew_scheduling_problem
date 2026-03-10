@@ -3,27 +3,14 @@
 """
 Pyomo implementation of Saemi et al. (2021) integrated crew scheduling model.
 
-This file is a corrected and cleaned-up version of the earlier implementation.
-Key fixes:
- - Sanity checks (_run_sanity_checks) are executed on the extracted solution
-   and the solution.feasibility is annotated if inconsistencies are found.
- - Diagnostic CSV writers use the model's processed flight data (shifted days,
-   departure/arrival), and crew home-base mapping used by the model, so the
-   solver summary and the produced CSVs match.
- - Improved robustness in variable index parsing and defensive handling of None
-   variable values while extracting solutions.
- - Removed duplicate / misplaced code fragments.
- - Constraint (7): `later_sum` now uses lexicographic ordering (dp > d) OR
-   (dp == d AND fp > f) so that same-day higher-index duties and next-day
-   duties with any duty index are all treated as "later" duties.
- - Constraint (35): overnight (next-day) sit times excluded from per-duty
-   elapsed time to avoid incorrectly blocking cross-day crew assignments.
+This file contains the complete model implementation, robust solver selection
+(fallback for HiGHS), solution extraction, sanity checks and diagnostic CSV writers.
 """
-
 import time
 import os
 import csv
 import json
+import shutil
 from collections import defaultdict
 from collections.abc import Iterable
 
@@ -388,7 +375,7 @@ class IntegratedCrewSchedulingModel:
             if home is None:
                 return pyo.Constraint.Skip
             f = 1
-            # s[i,home,d] >= 1 - M*(1 - y[i,d,f])  -> implemented as:
+            # s[i,home,d] >= -M * (1 - y[i,d,f]) + 1
             return model.s[i, home, d] >= -M * (1 - model.y[i, d, f]) + 1
         self.model.c6 = pyo.Constraint(self.model.I, self.model.D, rule=c6_rule)
         self.con_stats["6"] = len(self.model.c6)
@@ -431,10 +418,8 @@ class IntegratedCrewSchedulingModel:
 
         # (10) Flight integrity on a duty day
         def c10_rule(model, i, j, d):
-            incoming = sum(model.x[i, fid, n] for fid in flights_on_day.get(d, [])
-                           for n in model.N if self.flights_by_id[fid]["dest"] == j)
-            outgoing = sum(model.x[i, fid, n] for fid in flights_on_day.get(d, [])
-                           for n in model.N if self.flights_by_id[fid]["origin"] == j)
+            incoming = sum(model.x[i, fid, n] for fid in flights_on_day.get(d, []) for n in model.N if self.flights_by_id[fid]["dest"] == j)
+            outgoing = sum(model.x[i, fid, n] for fid in flights_on_day.get(d, []) for n in model.N if self.flights_by_id[fid]["origin"] == j)
             return model.s[i, j, d] + incoming == outgoing + model.w[i, j, d]
         self.model.c10 = pyo.Constraint(self.model.I, self.model.J, self.model.D, rule=c10_rule)
         self.con_stats["10"] = len(self.model.c10)
@@ -488,8 +473,7 @@ class IntegratedCrewSchedulingModel:
                     d = f1["day"]
                     j = f1["origin"]
                     for n in model.N_minus_1:
-                        arrivals = sum(model.x[i, fid2, n] for fid2 in flights_on_day.get(d, [])
-                                       if self.flights_by_id[fid2]["dest"] == j)
+                        arrivals = sum(model.x[i, fid2, n] for fid2 in flights_on_day.get(d, []) if self.flights_by_id[fid2]["dest"] == j)
                         f = 1
                         expr1 = arrivals >= 1 - M * (2 - model.y[i, d, f] - model.x[i, fid, n + 1])
                         expr2 = arrivals <= 1 + M * (2 - model.y[i, d, f] - model.x[i, fid, n + 1])
@@ -513,10 +497,8 @@ class IntegratedCrewSchedulingModel:
                                 for fid in flights_on_day.get(dp, []):
                                     fdp = self.flights_by_id[fid]
                                     j = fdp["origin"]
-                                    arrivals_d = sum(model.x[i, fid2, n] for fid2 in flights_on_day.get(d, [])
-                                                     if self.flights_by_id[fid2]["dest"] == j)
-                                    arrivals_dp = sum(model.x[i, fid2, n] for fid2 in flights_on_day.get(dp, [])
-                                                      if self.flights_by_id[fid2]["dest"] == j)
+                                    arrivals_d = sum(model.x[i, fid2, n] for fid2 in flights_on_day.get(d, []) if self.flights_by_id[fid2]["dest"] == j)
+                                    arrivals_dp = sum(model.x[i, fid2, n] for fid2 in flights_on_day.get(dp, []) if self.flights_by_id[fid2]["dest"] == j)
                                     expr1 = arrivals_d + arrivals_dp >= 1 - M * (3 - model.y[i, dp, f + 1] - model.y[i, d, f] - model.x[i, fid, n + 1])
                                     expr2 = arrivals_d + arrivals_dp <= 1 + M * (3 - model.y[i, dp, f + 1] - model.y[i, d, f] - model.x[i, fid, n + 1])
                                     model.add_component(f"c19_{i}_{fid}_{n}_{d}_{dp}_{f}", pyo.Constraint(expr=expr1))
@@ -529,8 +511,7 @@ class IntegratedCrewSchedulingModel:
         def c21_rule(model, i, j, d):
             n = 1
             f = 1
-            sum_round1_orig = sum(model.x[i, fid, n] for fid in flights_on_day.get(d, [])
-                                   if self.flights_by_id[fid]["origin"] == j)
+            sum_round1_orig = sum(model.x[i, fid, n] for fid in flights_on_day.get(d, []) if self.flights_by_id[fid]["origin"] == j)
             return sum_round1_orig >= model.s[i, j, d] - M * (1 - model.y[i, d, f])
         self.model.c21 = pyo.Constraint(self.model.I, self.model.J, self.model.D, rule=c21_rule)
         self.con_stats["21"] = len(self.model.c21)
@@ -547,13 +528,10 @@ class IntegratedCrewSchedulingModel:
                                 for f in model.F:
                                     if f + 1 not in model.F:
                                         continue
-                                    lhs = sum(model.x[i, fid, n] for fid in flights_on_day.get(d, [])
-                                              if self.flights_by_id[fid]["origin"] == j)
-                                    sum_prev = (sum(model.x[i, fid, n - 1] for fid in flights_on_day.get(d_prime, []))
-                                                if (n - 1) in model.N else 0)
+                                    lhs = sum(model.x[i, fid, n] for fid in flights_on_day.get(d, []) if self.flights_by_id[fid]["origin"] == j)
+                                    sum_prev = (sum(model.x[i, fid, n - 1] for fid in flights_on_day.get(d_prime, [])) if (n - 1) in model.N else 0)
                                     sum_curr = sum(model.x[i, fid, n] for fid in flights_on_day.get(d_prime, []))
-                                    rhs = (model.s[i, j, d] - M * (2 - model.y[i, d_prime, f] - model.y[i, d, f + 1])
-                                           - M * (1 - sum_prev) - M * sum_curr)
+                                    rhs = (model.s[i, j, d] - M * (2 - model.y[i, d_prime, f] - model.y[i, d, f + 1]) - M * (1 - sum_prev) - M * sum_curr)
                                     # lhs >= rhs
                                     model.add_component(f"c22_{i}_{j}_{d}_{d_prime}_{n}_{f}", pyo.Constraint(expr=lhs >= rhs))
                                     self.con_stats["22"] = self.con_stats.get("22", 0) + 1
@@ -614,16 +592,14 @@ class IntegratedCrewSchedulingModel:
 
         # (31) Maximum flying time per duty
         def c31_rule(model, i, d):
-            fly_time = sum((self.flights_by_id[fid]["l"] - self.flights_by_id[fid]["de"]) * model.x[i, fid, n]
-                           for fid in flights_on_day.get(d, []) for n in model.N)
+            fly_time = sum((self.flights_by_id[fid]["l"] - self.flights_by_id[fid]["de"]) * model.x[i, fid, n] for fid in flights_on_day.get(d, []) for n in model.N)
             return fly_time <= upper1
         self.model.c31 = pyo.Constraint(self.model.I, self.model.D, rule=c31_rule)
         self.con_stats["31"] = len(self.model.c31)
 
         # (32) Maximum flying time over horizon
         def c32_rule(model, i):
-            fly_time = sum((self.flights_by_id[fid]["l"] - self.flights_by_id[fid]["de"]) * model.x[i, fid, n]
-                           for fid in model.Flights for n in model.N)
+            fly_time = sum((self.flights_by_id[fid]["l"] - self.flights_by_id[fid]["de"]) * model.x[i, fid, n] for fid in model.Flights for n in model.N)
             return fly_time <= upper2
         self.model.c32 = pyo.Constraint(self.model.I, rule=c32_rule)
         self.con_stats["32"] = len(self.model.c32)
@@ -648,8 +624,7 @@ class IntegratedCrewSchedulingModel:
         def c35_build(model):
             for i in model.I:
                 for d in model.D:
-                    fly_terms = sum((self.flights_by_id[fid]["l"] - self.flights_by_id[fid]["de"]) * model.x[i, fid, n]
-                                    for fid in flights_on_day.get(d, []) for n in model.N)
+                    fly_terms = sum((self.flights_by_id[fid]["l"] - self.flights_by_id[fid]["de"]) * model.x[i, fid, n] for fid in flights_on_day.get(d, []) for n in model.N)
                     sit_terms = 0
                     for (fid1, fid2) in self.same_day_pairs:
                         f1 = self.flights_by_id[fid1]
@@ -666,8 +641,7 @@ class IntegratedCrewSchedulingModel:
         """Objective (1)."""
         uncover = sum(self.uncover_costs[fid] * (1 - self.model.v[fid]) for fid in self.model.Flights)
         deadhead = sum(self.flight_costs[fid] * (self.model.b[fid] - self.model.v[fid]) for fid in self.model.Flights)
-        away = sum(self.h * self.model.w[i, j, d] for i in self.model.I for j in self.model.J for d in self.model.D
-                   if j != self.o_i.get(i))
+        away = sum(self.h * self.model.w[i, j, d] for i in self.model.I for j in self.model.J for d in self.model.D if j != self.o_i.get(i))
         crew_cost = sum(self.r_i[i] * self.model.SS[i] for i in self.model.I)
         self.model.obj = pyo.Objective(expr=uncover + deadhead + away + crew_cost, sense=pyo.minimize)
 
@@ -679,27 +653,85 @@ class IntegratedCrewSchedulingModel:
         Solve the model using the specified solver.
         Returns a solution dictionary identical to the original Gurobi version.
         """
-        solver = SolverFactory(solver_name)
-        if solver is None:
-            raise ValueError(f"Solver {solver_name} not available.")
+        # If user requested 'highs', prefer the CLI when present on PATH, then attempt python binding.
+        chosen_backend = solver_name
+        highs_path = shutil.which('highs')
+
+        if solver_name.lower() in ('highs', 'highs_wrapper', 'highs_solver'):
+            # Prefer CLI if a highs binary exists
+            if highs_path:
+                chosen_backend = 'highs'
+            else:
+                # Try import highspy (Python binding) before asking SolverFactory for highs_direct
+                try:
+                    import highspy  # type: ignore
+                    chosen_backend = 'highs_direct'
+                except Exception:
+                    # neither CLI nor binding available; still attempt to let SolverFactory show diagnostics but avoid raising
+                    chosen_backend = 'highs'
+
+        # Create solver via SolverFactory; handle exceptions during creation
+        try:
+            solver = SolverFactory(chosen_backend)
+        except Exception as e:
+            # Fall back to trying the CLI explicitly if highs exists
+            if chosen_backend != 'highs' and highs_path:
+                try:
+                    solver = SolverFactory('highs')
+                    chosen_backend = 'highs'
+                except Exception:
+                    return {
+                        "feasibility": "Error",
+                        "error_message": f"Failed to create solver backend '{chosen_backend}': {e}",
+                        "solve_time": 0.0,
+                        "uncovered_flights": list(self.fid_list),
+                        "instance_info": {
+                            "num_flights": len(self.fid_list),
+                            "num_crews": len(self.I),
+                            "num_days": len(self.D),
+                            "num_cities": len(self.J),
+                        },
+                        "var_counts": dict(self.var_stats),
+                        "constraint_counts": dict(self.con_stats),
+                    }
+            else:
+                return {
+                    "feasibility": "Error",
+                    "error_message": f"Failed to create solver backend '{chosen_backend}': {e}",
+                    "solve_time": 0.0,
+                    "uncovered_flights": list(self.fid_list),
+                    "instance_info": {
+                        "num_flights": len(self.fid_list),
+                        "num_crews": len(self.I),
+                        "num_days": len(self.D),
+                        "num_cities": len(self.J),
+                    },
+                    "var_counts": dict(self.var_stats),
+                    "constraint_counts": dict(self.con_stats),
+                }
 
         # Set solver options
-        if solver_name in ('gurobi', 'gurobi_direct'):
+        if chosen_backend in ('gurobi', 'gurobi_direct'):
             solver.options['TimeLimit'] = time_limit
             solver.options['MIPGap'] = float(self.params.get("mip_gap", 0.001))
-        elif solver_name == 'mosek':
+        elif chosen_backend == 'mosek':
             solver.options['dparam.optimizer_max_time'] = time_limit
             solver.options['dparam.mio_tol_rel_gap'] = float(self.params.get("mip_gap", 0.001))
-        elif solver_name == 'highs':
-            solver.options['time_limit'] = time_limit
-            solver.options['mip_gap'] = float(self.params.get("mip_gap", 0.001))
+        elif chosen_backend in ('highs', 'highs_direct'):
+            # Try common HiGHS options; plugins differ so be defensive
+            try:
+                solver.options['time_limit'] = time_limit
+                solver.options['mip_gap'] = float(self.params.get("mip_gap", 0.001))
+            except Exception:
+                solver.options['timelimit'] = time_limit
+                solver.options['mipgap'] = float(self.params.get("mip_gap", 0.001))
         else:
             solver.options['timelimit'] = time_limit
             solver.options['mipgap'] = float(self.params.get("mip_gap", 0.001))
 
         start = time.time()
         try:
-            print(f"\nSolving model with {solver_name} (time limit: {time_limit}s)...")
+            print(f"\nSolving model with {chosen_backend} (time limit: {time_limit}s)...")
             results = solver.solve(self.model, tee=True)
             solve_time = time.time() - start
             return self._extract_solution(results, solve_time)
@@ -715,8 +747,6 @@ class IntegratedCrewSchedulingModel:
                     "num_crews": len(self.I),
                     "num_days": len(self.D),
                     "num_cities": len(self.J),
-                    "same_day_pairs": len(self.same_day_pairs),
-                    "next_day_pairs": len(self.next_day_pairs),
                 },
                 "var_counts": dict(self.var_stats),
                 "constraint_counts": dict(self.con_stats),
