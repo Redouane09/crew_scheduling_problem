@@ -1,0 +1,48 @@
+Assignment comparison report
+
+- baseline: crews=15, total_assigned_flights=38
+- mosek: crews=15, total_assigned_flights=38
+- gurobi: crews=15, total_assigned_flights=38
+- highs: crews=15, total_assigned_flights=38
+
+Comparison baseline vs mosek: differences in 6 crews
+  crew 0: only_in_baseline=[4, 5, 6, 7, 8, 9, 10], only_in_mosek=[]
+  crew 3: only_in_baseline=[], only_in_mosek=[12, 13, 14]
+  crew 6: only_in_baseline=[12, 13, 14], only_in_mosek=[]
+  crew 8: only_in_baseline=[22, 23], only_in_mosek=[]
+  crew 11: only_in_baseline=[], only_in_mosek=[4, 5, 6, 7, 8, 9, 10]
+  crew 12: only_in_baseline=[], only_in_mosek=[22, 23]
+
+Comparison baseline vs gurobi: differences in 6 crews
+  crew 0: only_in_baseline=[4, 5, 6, 7, 8, 9, 10], only_in_gurobi=[]
+  crew 8: only_in_baseline=[22, 23], only_in_gurobi=[]
+  crew 10: only_in_baseline=[], only_in_gurobi=[29, 31, 32, 33, 34]
+  crew 11: only_in_baseline=[], only_in_gurobi=[20, 21, 22, 23, 24]
+  crew 12: only_in_baseline=[20, 21, 24], only_in_gurobi=[4, 5, 6, 7, 8, 9, 10]
+  crew 14: only_in_baseline=[29, 31, 32, 33, 34], only_in_gurobi=[]
+
+Comparison baseline vs highs: differences in 0 crews
+
+Comparison mosek vs gurobi: differences in 6 crews
+  crew 3: only_in_mosek=[12, 13, 14], only_in_gurobi=[]
+  crew 6: only_in_mosek=[], only_in_gurobi=[12, 13, 14]
+  crew 10: only_in_mosek=[], only_in_gurobi=[29, 31, 32, 33, 34]
+  crew 11: only_in_mosek=[4, 5, 6, 7, 8, 9, 10], only_in_gurobi=[20, 21, 22, 23, 24]
+  crew 12: only_in_mosek=[20, 21, 22, 23, 24], only_in_gurobi=[4, 5, 6, 7, 8, 9, 10]
+  crew 14: only_in_mosek=[29, 31, 32, 33, 34], only_in_gurobi=[]
+
+Comparison mosek vs highs: differences in 6 crews
+  crew 0: only_in_mosek=[], only_in_highs=[4, 5, 6, 7, 8, 9, 10]
+  crew 3: only_in_mosek=[12, 13, 14], only_in_highs=[]
+  crew 6: only_in_mosek=[], only_in_highs=[12, 13, 14]
+  crew 8: only_in_mosek=[], only_in_highs=[22, 23]
+  crew 11: only_in_mosek=[4, 5, 6, 7, 8, 9, 10], only_in_highs=[]
+  crew 12: only_in_mosek=[22, 23], only_in_highs=[]
+
+Comparison gurobi vs highs: differences in 6 crews
+  crew 0: only_in_gurobi=[], only_in_highs=[4, 5, 6, 7, 8, 9, 10]
+  crew 8: only_in_gurobi=[], only_in_highs=[22, 23]
+  crew 10: only_in_gurobi=[29, 31, 32, 33, 34], only_in_highs=[]
+  crew 11: only_in_gurobi=[20, 21, 22, 23, 24], only_in_highs=[]
+  crew 12: only_in_gurobi=[4, 5, 6, 7, 8, 9, 10], only_in_highs=[20, 21, 24]
+  crew 14: only_in_gurobi=[], only_in_highs=[29, 31, 32, 33, 34]
