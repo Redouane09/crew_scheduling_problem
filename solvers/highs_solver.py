@@ -1,11 +1,17 @@
 #!/usr/bin/env python3
 # solvers/highs_solver.py
+"""
+HiGHS solver wrapper for the integrated crew scheduling model.
+
+This wrapper checks availability (tries 'highs' CLI then 'highs_direct'),
+fails fast with a clear diagnostic if HiGHS is not available, builds the
+model and delegates to model.solve(..., solver_name=chosen_backend).
+"""
 import sys
 import os
 import time
-import json
-import csv
 import traceback
+import shutil
 from collections import defaultdict
 
 from .base_solver import BaseSolver
@@ -16,6 +22,7 @@ if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
 from model.integrated_csp_model import IntegratedCrewSchedulingModel
+from pyomo.opt import SolverFactory
 
 
 class HiGHSWrapperSolver(BaseSolver):
@@ -27,15 +34,77 @@ class HiGHSWrapperSolver(BaseSolver):
         self.objective_value = None
         self.model = None
 
+    def _check_highs_available(self):
+        """Return (available_bool, chosen_backend, diagnostic_message).
+
+        Strategy:
+         - Prefer CLI if `shutil.which('highs')` returns a path.
+         - Otherwise, attempt to import the Python binding 'highspy' and use 'highs_direct' if present.
+         - Avoid blindly calling SolverFactory('highs_direct') when highspy is not installed (that can cause Pyomo to try mapping to an ASL solver).
+        """
+        attempted = []
+        # Prefer CLI if present
+        highs_bin = shutil.which('highs')
+        if highs_bin:
+            # try a light-weight check using SolverFactory but do not rely on available(True) raising
+            try:
+                s = SolverFactory('highs')
+                attempted.append('highs')
+                # Return CLI as chosen backend if creation succeeded
+                return True, 'highs', f"HiGHS CLI found at {highs_bin}"
+            except Exception:
+                # If creation unexpectedly fails, continue to binding check
+                attempted.append('highs_creation_failed')
+
+        # Try Python binding 'highspy' before calling SolverFactory('highs_direct')
+        try:
+            import highspy  # type: ignore
+            # If import succeeded, attempt to use solver name highs_direct
+            try:
+                s2 = SolverFactory('highs_direct')
+                attempted.append('highs_direct')
+                return True, 'highs_direct', "HiGHS Python binding (highspy) is importable; will use highs_direct."
+            except Exception:
+                attempted.append('highs_direct_creation_failed')
+        except Exception:
+            attempted.append('highspy_not_installed')
+
+        msg_lines = [
+            f"Attempted backends: {attempted}",
+            f"shutil.which('highs') -> {highs_bin}",
+            "HiGHS is not available to Pyomo in this environment. Install the HiGHS CLI "
+            "(conda install -c conda-forge highs / brew install highs) or the Python binding 'highspy' "
+            "(pip install highspy) and ensure you are running the same Python environment."
+        ]
+        return False, None, "\n".join(msg_lines)
+
     def solve(self, instance_data, time_limit=300.0):
         start_time = time.time()
         try:
+            # Quick availability check: fail fast with clear diagnostics if HiGHS is not usable
+            avail, backend, diag = self._check_highs_available()
+            if not avail:
+                print("✗ HiGHS not available:", diag)
+                return {
+                    "feasibility": "Error",
+                    "error_message": diag,
+                    "solve_time": 0.0,
+                    "uncovered_flights": instance_data.get("flights", []),
+                    "instance_info": {
+                        "num_flights": len(instance_data.get("flights", [])),
+                        "num_crews": len(instance_data.get("crew", [])),
+                        "num_days": instance_data.get("parameters", {}).get("num_days", None),
+                        "num_cities": len(instance_data.get("cities", []) or [])
+                    }
+                }
+
             # Build the Pyomo model
             model = IntegratedCrewSchedulingModel(instance_data)
             self.model = model
 
-            # Solve with HiGHS
-            solution = model.solve(time_limit=time_limit, solver_name='highs')
+            # Solve with HiGHS (use the backend determined by availability check)
+            solver_name = 'highs' if backend == 'highs' else 'highs_direct'
+            solution = model.solve(time_limit=time_limit, solver_name=solver_name)
             if solution is None:
                 print("✗ No solution returned by the solver.")
                 return None
